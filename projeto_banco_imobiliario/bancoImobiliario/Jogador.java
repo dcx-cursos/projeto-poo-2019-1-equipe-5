@@ -1,4 +1,4 @@
-package com.projeto_banco_imobiliario;
+package bancoImobiliario;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,10 +65,10 @@ public class Jogador implements Status {
 		
 		System.out.println("***STATUS***");
 		System.out.println("Jogador: " + this.getNome());
-		System.out.println("Cor do peão: " + this.getPeao());
-		System.out.println("Posição atual: " + this.getPosicaoAtual());
+		System.out.println("Cor do peï¿½o: " + this.getPeao());
+		System.out.println("Posiï¿½ï¿½o atual: " + this.getPosicaoAtual());
 		System.out.println("Dinheiro: " + this.getDinheiro());
-		System.out.println("Títulos: ");//Implementar lista de títulos aqui!
+		System.out.println("Tï¿½tulos: ");//Implementar lista de tï¿½tulos aqui!
 		
 	}
 	

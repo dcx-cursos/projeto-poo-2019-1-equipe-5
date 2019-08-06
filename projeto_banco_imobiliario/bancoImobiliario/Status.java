@@ -1,4 +1,4 @@
-package com.projeto_banco_imobiliario;
+package bancoImobiliario;
 
 public interface Status {
 

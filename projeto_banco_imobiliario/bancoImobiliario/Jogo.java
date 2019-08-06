@@ -1,5 +1,4 @@
-package com.projeto_banco_imobiliario;
-
+package br.ufpb.bancoImobiliario;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +17,7 @@ public class Jogo {
 	public void criarJogo() throws NumeroJogadoresException {
 		
 		System.out.println("##################################################");
-		System.out.println("BANCO IMOBILIÁRIO");
+		System.out.println("BANCO IMOBILIï¿½RIO");
 		System.out.println("Welcome to the best game on board!");
 		System.out.println("##################################################\n");
 		System.out.println("START:\n");
@@ -39,9 +38,9 @@ public class Jogo {
 				System.out.println("Digite o nome do jogador " + (i+1) + ": ");
 				nome = scan.nextLine();
 				
-				//Escolhe a cor do peão do jogador
-				System.out.println("Escolha a cor do peão do jogador " + (i+1) + ": ");
-				System.out.println("Cores disponíveis:");
+				//Escolhe a cor do peï¿½o do jogador
+				System.out.println("Escolha a cor do peï¿½o do jogador " + (i+1) + ": ");
+				System.out.println("Cores disponï¿½veis:");
 				System.out.println(listarPeoes());
 				
 				peao = escolherPeao();
@@ -53,10 +52,10 @@ public class Jogo {
 				
 			}
 			
-			System.out.println("O jogo vai comeaçar. Aproveitem!");
+			System.out.println("O jogo vai comeaï¿½ar. Aproveitem!");
 			
 		} else {
-			throw new NumeroJogadoresException("Número de jogadores inválido. Escolha entre 2 e 8 jogadores!");
+			throw new NumeroJogadoresException("Nï¿½mero de jogadores invï¿½lido. Escolha entre 2 e 8 jogadores!");
 		}
 	}
 	
@@ -66,8 +65,8 @@ public class Jogo {
 			
 			for (int i = 0; i < nJogadores; i++) {
 				
-				System.out.println("A vez é do jogador " + jogadores.get(i).getNome() + "(" + jogadores.get(i).getPeao() + ").");
-				System.out.println("Escolha uma opção: " + jogadores.get(i).getOpcoes());
+				System.out.println("A vez ï¿½ do jogador " + jogadores.get(i).getNome() + "(" + jogadores.get(i).getPeao() + ").");
+				System.out.println("Escolha uma opï¿½ï¿½o: " + jogadores.get(i).getOpcoes());
 
 				String opcao = scan.nextLine().toLowerCase();
 				
@@ -79,10 +78,10 @@ public class Jogo {
 					dado1 = rolarDado();
 					dado2 = rolarDado();
 					
-					System.out.println("Jogador: " + jogadores.get(i).getNome() + "\nPeão: " + jogadores.get(i).getPeao() + "\n"
-							+ "Dado 1: " + dado1 + "\nDado 2: " + dado2 + "\nAvançou para a casa: " + 
+					System.out.println("Jogador: " + jogadores.get(i).getNome() + "\nPeï¿½o: " + jogadores.get(i).getPeao() + "\n"
+							+ "Dado 1: " + dado1 + "\nDado 2: " + dado2 + "\nAvanï¿½ou para a casa: " + 
 							(dado1+dado2+jogadores.get(i).getPosicaoAtual()));
-					//falta acrescentar o que acontecerá na jogada!
+					//falta acrescentar o que acontecerï¿½ na jogada!
 					
 					break;
 				case "sair":
@@ -96,7 +95,7 @@ public class Jogo {
 					break;
 					
 				default:
-					System.out.println("Opção inválida!");
+					System.out.println("Opï¿½ï¿½o invï¿½lida!");
 				}
 				
 			}
@@ -106,24 +105,16 @@ public class Jogo {
 	}
 	
 	private String escolherPeao() {
-		String corPeao = scan.nextLine().toLowerCase();				//Quando a cor não existe, está imprimindo a cor errada
-		
-		//verifica se foi digitada uma cor existente
-		if (!peoes.contains(corPeao)) {
-			System.out.println("Cor inexistente. Escolha uma cor válida!");
-			escolherPeao();
-		} else {
-			//verifica se a cor já foi escolhida
-			for (String p : peoesEscolhidos) {
-				if (p.equals(corPeao)) {
-					System.out.println("O peão de cor " + corPeao + " já foi escolhido!");
-					escolherPeao();
-				}
-			}
-			
-			peoesEscolhidos.add(corPeao);
-			//peoes.remove("["+corPeao+"]");
+		String corPeao = scan.nextLine().toLowerCase();	
+		while (!peoes.contains(corPeao)) {
+			System.out.println("Essa cor nÃ£o existe. Escolha uma cor dentre as disponÃ­veis!");
+			corPeao = corPeao.replaceAll(corPeao, scan.nextLine().toLowerCase());
 		}
+		while (peoesEscolhidos.contains(corPeao)) {
+			System.out.println("Essa cor jÃ¡ foi escolhida. Escolha outra!");
+			corPeao = corPeao.replaceAll(corPeao, scan.nextLine().toLowerCase());
+		}
+		peoesEscolhidos.add(corPeao);
 		return corPeao;
 	}
 
