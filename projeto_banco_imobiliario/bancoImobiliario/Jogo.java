@@ -1,4 +1,6 @@
-package br.ufpb.bancoImobiliario;
+package bancoImobiliario;
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +19,7 @@ public class Jogo {
 	public void criarJogo() throws NumeroJogadoresException {
 		
 		System.out.println("##################################################");
-		System.out.println("BANCO IMOBILI�RIO");
+		System.out.println("BANCO IMOBILIÁRIO");
 		System.out.println("Welcome to the best game on board!");
 		System.out.println("##################################################\n");
 		System.out.println("START:\n");
@@ -38,9 +40,9 @@ public class Jogo {
 				System.out.println("Digite o nome do jogador " + (i+1) + ": ");
 				nome = scan.nextLine();
 				
-				//Escolhe a cor do pe�o do jogador
-				System.out.println("Escolha a cor do pe�o do jogador " + (i+1) + ": ");
-				System.out.println("Cores dispon�veis:");
+				//Escolhe a cor do peão do jogador
+				System.out.println("Escolha a cor do peão do jogador " + (i+1) + ": ");
+				System.out.println("Cores disponíveis:");
 				System.out.println(listarPeoes());
 				
 				peao = escolherPeao();
@@ -52,21 +54,21 @@ public class Jogo {
 				
 			}
 			
-			System.out.println("O jogo vai comea�ar. Aproveitem!");
+			System.out.println("O jogo vai comeaçar. Aproveitem!");
 			
 		} else {
-			throw new NumeroJogadoresException("N�mero de jogadores inv�lido. Escolha entre 2 e 8 jogadores!");
+			throw new NumeroJogadoresException("Número de jogadores inválido. Escolha entre 2 e 8 jogadores!");
 		}
 	}
 	
 	public void iniciarJogo() {
 		
-		while (nJogadores >= 2) {
+		
+		while (nJogadores>=2) {
 			
 			for (int i = 0; i < nJogadores; i++) {
-				
-				System.out.println("A vez � do jogador " + jogadores.get(i).getNome() + "(" + jogadores.get(i).getPeao() + ").");
-				System.out.println("Escolha uma op��o: " + jogadores.get(i).getOpcoes());
+				System.out.println("A vez é do jogador " + jogadores.get(i).getNome() + "(" + jogadores.get(i).getPeao() + ").");
+				System.out.println("Escolha uma opção: " + jogadores.get(i).getOpcoes());
 
 				String opcao = scan.nextLine().toLowerCase();
 				
@@ -77,17 +79,24 @@ public class Jogo {
 					
 					dado1 = rolarDado();
 					dado2 = rolarDado();
-					
-					System.out.println("Jogador: " + jogadores.get(i).getNome() + "\nPe�o: " + jogadores.get(i).getPeao() + "\n"
-							+ "Dado 1: " + dado1 + "\nDado 2: " + dado2 + "\nAvan�ou para a casa: " + 
+					if(dado1+dado2+jogadores.get(i).getPosicaoAtual()>= 40) {
+						jogadores.get(i).setPosicaoAtual(dado1+dado2+jogadores.get(i).getPosicaoAtual()-40);
+					}
+					System.out.println("Jogador: " + jogadores.get(i).getNome() + "\nPeão: " + jogadores.get(i).getPeao() + "\n"
+							+ "Dado 1: " + dado1 + "\nDado 2: " + dado2 + "\nAvançou para a casa: " + 
 							(dado1+dado2+jogadores.get(i).getPosicaoAtual()));
-					//falta acrescentar o que acontecer� na jogada!
-					
 					break;
 				case "sair":
 					System.out.print("Deseja realmente sair do jogo? ");
 					String decisao = scan.nextLine().toLowerCase();
-					if (decisao.equals("sim")) jogadores.remove(i);
+					if (decisao.equals("sim")) { 
+						jogadores.remove(i);
+						nJogadores-= 1;
+					}else {
+						--i;
+					}
+					
+						
 					break;
 					
 				case "status":
@@ -95,12 +104,11 @@ public class Jogo {
 					break;
 					
 				default:
-					System.out.println("Op��o inv�lida!");
+					System.out.println("Opção inválida!");
 				}
-				
-			}
-		}
+		}	
 		
+			}
 		System.out.println("Fim de jogo!");
 	}
 	
@@ -133,3 +141,4 @@ public class Jogo {
 		return d;
 	}
 }
+
