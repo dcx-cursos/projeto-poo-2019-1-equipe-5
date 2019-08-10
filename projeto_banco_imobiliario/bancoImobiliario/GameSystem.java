@@ -2,6 +2,11 @@ package bancoImobiliario;
 
 import java.util.Scanner;
 
+/**
+ * Classe main do sistema.
+ * 
+ * @author Aisllan
+ */
 public class GameSystem {
 
 	public static void main(String[] args) {

@@ -7,6 +7,15 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * A classe jogo é responsável por criar uma nova partida, onde é possível escolher a quantidade de jogadores que
+ * irá participar, cadastrar cada jogador com nome e cor do peão, jogar os dados para que se possa andar pelo tabuleiro, 
+ * sair do jogo e por fim consutar o status do jogador.   
+ * 
+ * 
+ * @author Aisllan
+ *
+ */
 public class Jogo {
 
 	Scanner scan = new Scanner(System.in);
@@ -16,6 +25,14 @@ public class Jogo {
 	private List<String> peoesEscolhidos = new ArrayList<>();
 	private List<Jogador> jogadores = new ArrayList<>();
 	
+	
+/**
+ * Método em que o jogador irá indicar a quantidade de jogadores que participaram do jogo 
+ * e que lançará uma Exception caso o número de jogadores for menor que dois ou maior que oito.
+ * 
+ * @author Aisllan
+ * @throws NumeroJogadoresException  Se o número de jogadores for inválido.
+ */
 	public void criarJogo() throws NumeroJogadoresException {
 		
 		System.out.println("##################################################");
@@ -40,9 +57,9 @@ public class Jogo {
 				System.out.println("Digite o nome do jogador " + (i+1) + ": ");
 				nome = scan.nextLine();
 				
-				//Escolhe a cor do peão do jogador
+				//Escolhe a cor do peÃ£o do jogador
 				System.out.println("Escolha a cor do peão do jogador " + (i+1) + ": ");
-				System.out.println("Cores disponíveis:");
+				System.out.println("Cores disponiveis:");
 				System.out.println(listarPeoes());
 				
 				peao = escolherPeao();
@@ -54,20 +71,25 @@ public class Jogo {
 				
 			}
 			
-			System.out.println("O jogo vai comeaçar. Aproveitem!");
+			System.out.println("O jogo vai começar. Aproveitem!");
 			
 		} else {
 			throw new NumeroJogadoresException("Número de jogadores inválido. Escolha entre 2 e 8 jogadores!");
 		}
 	}
 	
+	/**
+	 * Método em que os jogadores tem a opçao de jogar os dados, sair do jogo ou consultar status.
+	 * 
+	 * @author Aisllan
+	 */
 	public void iniciarJogo() {
 		
 		
 		while (nJogadores>=2) {
 			
 			for (int i = 0; i < nJogadores; i++) {
-				System.out.println("A vez é do jogador " + jogadores.get(i).getNome() + "(" + jogadores.get(i).getPeao() + ").");
+				System.out.println("A vez do jogador " + jogadores.get(i).getNome() + "(" + jogadores.get(i).getPeao() + ").");
 				System.out.println("Escolha uma opção: " + jogadores.get(i).getOpcoes());
 
 				String opcao = scan.nextLine().toLowerCase();
@@ -112,10 +134,17 @@ public class Jogo {
 		System.out.println("Fim de jogo!");
 	}
 	
+	/**
+	 * Método em que o jogador poderá escolher a cor do seu peão, consiste em
+	 * comparar a cor indicada pelo jogador com as cores existentes, se a cor do peão for válida ela é adiciona na lista de peões escolhidos.
+	 * 
+	 * @return Retorna a cor do peão escolhida. 
+	 * @author Aisllan
+	 */
 	private String escolherPeao() {
 		String corPeao = scan.nextLine().toLowerCase();	
 		while (!peoes.contains(corPeao)) {
-			System.out.println("Essa cor não existe. Escolha uma cor dentre as disponíveis!");
+			System.out.println("Essa cor não existe. Escolha uma cor dentre as disponiveis!");
 			corPeao = corPeao.replaceAll(corPeao, scan.nextLine().toLowerCase());
 		}
 		while (peoesEscolhidos.contains(corPeao)) {
@@ -125,6 +154,7 @@ public class Jogo {
 		peoesEscolhidos.add(corPeao);
 		return corPeao;
 	}
+	
 
 	public String listarPeoes() {
 		String p = "";
@@ -135,6 +165,12 @@ public class Jogo {
 		return p.trim();
 	}
 	
+	/**
+	 * Simula a jogada de um dado, sortenado um numero randômico de 0 a 6
+	 * 
+	 * @author Aisllan
+	 * @return Retorna o número sorteado.
+	 */
 	private int rolarDado() {
 		Random rand = new Random();
 		int d = 1 + rand.nextInt(6);

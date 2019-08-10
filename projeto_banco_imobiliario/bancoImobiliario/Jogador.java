@@ -3,6 +3,12 @@ package bancoImobiliario;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Classe Jogador, que tem como atributos o nome de um jogador, a cor do peão, o seu dinheiro e sua posição no tabuleiro. Além de fornecer
+ * opções que podem ser realizadas durante o jogo.
+ * @author Aisllan
+ *
+ */
 public class Jogador implements Status {
 
 	private String nome;
@@ -10,7 +16,14 @@ public class Jogador implements Status {
 	private int dinheiro;
 	private int posicaoAtual;
 	private List<String> opcoes;
-
+/**
+ * Construtor da Classe Jogador, que passa como parâmetro o nome e o peao.
+ * Que iniciará o jogo com o jogador com saldo de R$ 1.500,00 na posição 0 do tabuleiro.
+ *  
+ * @param nome Nome do jogador
+ * @param peao Cor do peão
+ * @author Aisllan
+ */
 	public Jogador(String nome, String peao) {
 		this.nome = nome;
 		this.peao = peao;
@@ -60,7 +73,10 @@ public class Jogador implements Status {
 		this.opcoes = opcoes;
 	}
 
-	@Override
+	/**
+	 * Fornece o Status do jogador, inidicado o seu nome, cor do peão, sua posiçao atual, saldo monetário e titulos de propriedades adquiridos.
+	 * @author Aisllan
+	 */
 	public void obterStatus() {
 		
 		System.out.println("***STATUS***");
