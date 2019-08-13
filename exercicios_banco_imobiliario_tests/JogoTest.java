@@ -24,4 +24,18 @@ class JogoTest {
 		assertThrows(NumeroJogadoresExcedenteException.class, () -> this.jogo.criaJogo(9));
 	}
 
+	@Test
+	void testEscolhePeao() {
+		this.jogo.escolhePeao(1);
+		this.jogo.escolhePeao(0);
+		this.jogo.escolhePeao(2);
+		this.jogo.escolhePeao(3);
+		this.jogo.escolhePeao(4);
+		this.jogo.escolhePeao(5);
+		this.jogo.escolhePeao(6);
+		this.jogo.escolhePeao(7);
+		this.jogo.escolhePeao(8);
+		this.jogo.escolhePeao(9);
+		this.jogo.escolhePeao(-1);
+	}
 }

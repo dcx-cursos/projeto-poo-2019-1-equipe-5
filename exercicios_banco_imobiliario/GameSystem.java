@@ -1,6 +1,5 @@
 package com.exercicios_banco_imobiliario_alternativo;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GameSystem {
@@ -33,8 +32,10 @@ public class GameSystem {
 				criaJogo = true;
 			} catch (NumeroJogadoresInsuficienteException e) {
 				System.err.println(e.getMessage());
+				numeroDeJogadores = Integer.parseInt(scan.nextLine());
 			} catch (NumeroJogadoresExcedenteException e) {
 				System.err.println(e.getMessage());
+				numeroDeJogadores = Integer.parseInt(scan.nextLine());
 			}
 		}
 		

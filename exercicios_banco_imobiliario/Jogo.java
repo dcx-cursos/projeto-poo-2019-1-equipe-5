@@ -2,26 +2,33 @@ package com.exercicios_banco_imobiliario_alternativo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
-import org.junit.platform.commons.util.StringUtils;
+/**
+ * Classe para objeto do tipo jogo, onde estão contidos, valores e métodos para o mesmo.
+ * @author Carlos Eduardo, Alefe e Aisllan
+ */
 
 public class Jogo {
 
 	private int numeroDeJogadores;
 	private Tabuleiro tabuleiro = new Tabuleiro();
-	private int valoresDuplicados;
+	//private int valoresDuplicados;
 	int contadorDeRodadas = 0;
 	private List<Jogador> jogadores = new ArrayList<Jogador>();
-	private List<TituloDePropriedade> titulosDePropriedade = new ArrayList<>();
-	private List<Companhia> companhias = new ArrayList<>();
 	private List<Integer> titulosVendidos = new ArrayList<>();
-
-	// CRIAR PILHA DE CARTAS SORTE OU REVES E IMPLEMENTAR NO MÉTODO JOGAR
+	
 
 	Scanner scan = new Scanner(System.in);
 
+	/**
+	 * Método encarregado de criar um novo jogo, cadastrando de 2 a 8 jogagdores. E que laçará uma Exception caso o número de jogadores for menor que
+	 * 2 ou maior que 8.
+	 * @param num - Número de jogadores
+	 * @throws NumeroJogadoresInsuficienteException Número de jogadores insuficiente
+	 * @throws NumeroJogadoresExcedenteException Número de jogadores excedeu limite
+	 */
+	
 	public void criaJogo(int num) throws NumeroJogadoresInsuficienteException, NumeroJogadoresExcedenteException {
 
 		if (num < 2)
@@ -68,6 +75,10 @@ public class Jogo {
 		}
 	}
 
+	/**
+	 * Método em que o jogador pode realizar ações, como, jogar os dados e avançar pelo tabuleiro, comprar propriedades, sair do jogo e consultar o seu status.  
+	 */
+	
 	public void iniciaJogo() {
 		
 		while (this.numeroDeJogadores > 1) {
@@ -92,24 +103,26 @@ public class Jogo {
 
 				case "jogar":
 
-					Random rand = new Random();
-
-					int dado1 = 1 + rand.nextInt(6);
-					int dado2 = 1 + rand.nextInt(6);
-					int movimento = rolaDados(jogadorDaVez.getPosicaoAtual(), dado1, dado2);
+					Dado dado1 = new Dado();
+					Dado dado2 = new Dado();
+					int d1 = dado1.rolaDado();
+					int d2 = dado2.rolaDado();
+					int movimento = anda(jogadorDaVez.getPosicaoAtual(), d1, d2);
+					
 					jogadorDaVez.setPosicaoAtual(movimento);
 
 					//Objetos para comparação
 					TituloDePropriedade titulo = new TituloDePropriedade();
 					Companhia companhia = new Companhia();
 					CartaSorteReves sorteReves = new CartaSorteReves();
+					CartaEspecial cartaEspecial = new CartaEspecial();
 					
 					if (tabuleiro.getCartas().get(movimento).getClass().equals(titulo.getClass())) {
 						
 						titulo = (TituloDePropriedade)tabuleiro.getCartas().get(jogadorDaVez.getPosicaoAtual());
 						
 						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") tirou " + dado1 + ", " + dado2 + " e o peão avançou para a casa " + movimento
+						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + movimento
 						+ " - " + ((TituloDePropriedade) tabuleiro.getCartas().get(movimento)).getNome());
 						
 						if (!titulosVendidos.contains(jogadorDaVez.getPosicaoAtual())) {
@@ -122,12 +135,16 @@ public class Jogo {
 												
 					} else if (tabuleiro.getCartas().get(movimento).getClass().equals(companhia.getClass())) {
 						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") tirou " + dado1 + ", " + dado2 + " e o peão avançou para a casa " + movimento
+						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + movimento
 						+ " - " + ((Companhia) tabuleiro.getCartas().get(movimento)).getNome());
 					} else if (tabuleiro.getCartas().get(movimento).getClass().equals(sorteReves.getClass())) {
 						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") tirou " + dado1 + ", " + dado2 + " e o peão avançou para a casa " + movimento
+						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + movimento
 						+ " - " + ((CartaSorteReves) tabuleiro.getCartas().get(movimento)).getDescricao());
+					} else if (tabuleiro.getCartas().get(movimento).getClass().equals(cartaEspecial.getClass())) {
+						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
+						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + movimento
+						+ " - " + ((CartaEspecial) tabuleiro.getCartas().get(movimento)).getNome());
 					}
 					
 					break;
@@ -173,11 +190,27 @@ public class Jogo {
 		} // fim do while
 	}
 
-	public int rolaDados(int posicaoAntiga, int dado1, int dado2) {
+	/**
+	 * Método utilizado para calcular o avanço de cada jogador a cada rodada
+	 * @param posicaoAntiga
+	 * @param dado1
+	 * @param dado2
+	 * @return retorna o movimento de avanço
+	 * @author Carlos Eduardo, Alefe e Aisllan
+	 **/
+	
+	public int anda(int posicaoAntiga, int dado1, int dado2) {
 		int movimento = 0;
 		movimento = (posicaoAntiga + dado1 + dado2) % 40;
 		return movimento;
 	}
+	
+	/**
+	 * Método para escolher a cor do peão
+	 * @param cor
+	 * @return retorna a cor do peão de cada jogador
+	 * @author Carlos Eduardo, Alefe e Aisllan
+	 **/
 
 	public Peao escolhePeao(int cor) {
 		Peao peao = null;
@@ -209,6 +242,13 @@ public class Jogo {
 		}
 		return peao;
 	}
+	
+	/**
+	 * Método que realiza a negociação de compra de título de propriedade
+	 * @param titulo
+	 * @param jogadorDaVez
+	 * @author Carlos Eduardo, Alefe e Aisllan
+	 **/
 	
 	public void negociaTituloDePropriedade(TituloDePropriedade titulo, Jogador jogadorDaVez) {
 		
