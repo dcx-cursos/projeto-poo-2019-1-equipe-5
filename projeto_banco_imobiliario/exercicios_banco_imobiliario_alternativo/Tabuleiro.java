@@ -1,4 +1,4 @@
-package com.exercicios_banco_imobiliario_alternativo;
+package exercicios_banco_imobiliario_alternativo;
 
 import java.util.ArrayList;
 import java.util.List;

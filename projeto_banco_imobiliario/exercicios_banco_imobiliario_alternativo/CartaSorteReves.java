@@ -1,4 +1,4 @@
-package com.exercicios_banco_imobiliario_alternativo;
+package exercicios_banco_imobiliario_alternativo;
 
 public class CartaSorteReves {
 

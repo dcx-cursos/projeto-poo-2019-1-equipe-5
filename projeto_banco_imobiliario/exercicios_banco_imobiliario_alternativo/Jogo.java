@@ -1,11 +1,11 @@
-package com.exercicios_banco_imobiliario_alternativo;
+package exercicios_banco_imobiliario_alternativo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * Classe para objeto do tipo jogo, onde estão contidos, valores e métodos para o mesmo.
+ * Classe para objeto do tipo jogo, onde estï¿½o contidos, valores e mï¿½todos para o mesmo.
  * @author Carlos Eduardo, Alefe e Aisllan
  */
 
@@ -22,21 +22,21 @@ public class Jogo {
 	Scanner scan = new Scanner(System.in);
 
 	/**
-	 * Método encarregado de criar um novo jogo, cadastrando de 2 a 8 jogagdores. E que laçará uma Exception caso o número de jogadores for menor que
+	 * Mï¿½todo encarregado de criar um novo jogo, cadastrando de 2 a 8 jogagdores. E que laï¿½arï¿½ uma Exception caso o nï¿½mero de jogadores for menor que
 	 * 2 ou maior que 8.
-	 * @param num - Número de jogadores
-	 * @throws NumeroJogadoresInsuficienteException Número de jogadores insuficiente
-	 * @throws NumeroJogadoresExcedenteException Número de jogadores excedeu limite
+	 * @param num - Nï¿½mero de jogadores
+	 * @throws NumeroJogadoresInsuficienteException Nï¿½mero de jogadores insuficiente
+	 * @throws NumeroJogadoresExcedenteException Nï¿½mero de jogadores excedeu limite
 	 */
 	
 	public void criaJogo(int num) throws NumeroJogadoresInsuficienteException, NumeroJogadoresExcedenteException {
 
 		if (num < 2)
 			throw new NumeroJogadoresInsuficienteException(
-					"Número de jogadores insuficiente. O jogo deve ter de 2 a 8 jogadores!");
+					"Nï¿½mero de jogadores insuficiente. O jogo deve ter de 2 a 8 jogadores!");
 		else if (num > 8)
 			throw new NumeroJogadoresExcedenteException(
-					"Número de jogadores excedente. O jogo deve ter de 2 a 8 jogadores!");
+					"Nï¿½mero de jogadores excedente. O jogo deve ter de 2 a 8 jogadores!");
 		else {
 			this.numeroDeJogadores = num;
 			List<Integer> coresEscolhidas = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Jogo {
 				System.out.print("Digite o nome do jogador " + (i + 1) + ": \n");
 				String nome = scan.nextLine();
 
-				System.out.println("Escolha o número correspondente a cor do peão de acordo com as cores dispoíveis:");
+				System.out.println("Escolha o nï¿½mero correspondente a cor do peï¿½o de acordo com as cores dispoï¿½veis:");
 				Peao.listaCores();
 
 				int cor = Integer.parseInt(scan.nextLine());
@@ -54,7 +54,7 @@ public class Jogo {
 
 				while (!escolhida) {
 					if (coresEscolhidas.contains(cor)) {
-						System.out.println("Cor já escolhida. Escolha outra cor!");
+						System.out.println("Cor jï¿½ escolhida. Escolha outra cor!");
 						cor = Integer.parseInt(scan.nextLine());
 					} else if (cor < 1 || cor > 8) {
 						System.out.println("Cor inexistente. Escolha outra cor!");
@@ -71,12 +71,12 @@ public class Jogo {
 			}
 
 			tabuleiro.criaCartas();
-			System.out.println("\n*** O BANCO IMOBILIÁRIO VAI COMEÇAR, APROVEITE! ***\n");
+			System.out.println("\n*** O BANCO IMOBILIï¿½RIO VAI COMEï¿½AR, APROVEITE! ***\n");
 		}
 	}
 
 	/**
-	 * Método em que o jogador pode realizar ações, como, jogar os dados e avançar pelo tabuleiro, comprar propriedades, sair do jogo e consultar o seu status.  
+	 * Mï¿½todo em que o jogador pode realizar aï¿½ï¿½es, como, jogar os dados e avanï¿½ar pelo tabuleiro, comprar propriedades, sair do jogo e consultar o seu status.  
 	 */
 	
 	public void iniciaJogo() {
@@ -88,14 +88,14 @@ public class Jogo {
 			for (int i = 0; i < this.jogadores.size(); i++) {
 				Jogador jogadorDaVez = jogadores.get(i);
 				if (contadorDeRodadas == 2 && !jogadorDaVez.getOpcoes().contains("status")) jogadorDaVez.adicionaOpcoes("status");
-				System.out.println("A vez é do jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ")");
-				System.out.println("Comandos disponíveis: " + jogadorDaVez.imprimeOpcoes());
+				System.out.println("A vez ï¿½ do jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ")");
+				System.out.println("Comandos disponï¿½veis: " + jogadorDaVez.imprimeOpcoes());
 				System.out.println("Digite o comando desejado:");
 				
 				String opcao = scan.nextLine();
 
 				while (!jogadorDaVez.getOpcoes().contains(opcao.toLowerCase())) {
-					System.out.println("Opção inválida!");
+					System.out.println("Opï¿½ï¿½o invï¿½lida!");
 					opcao = opcao.replaceAll(opcao, scan.nextLine());
 				}
 
@@ -111,7 +111,7 @@ public class Jogo {
 					
 					jogadorDaVez.setPosicaoAtual(movimento);
 
-					//Objetos para comparação
+					//Objetos para comparaï¿½ï¿½o
 					TituloDePropriedade titulo = new TituloDePropriedade();
 					Companhia companhia = new Companhia();
 					CartaSorteReves sorteReves = new CartaSorteReves();
@@ -122,28 +122,28 @@ public class Jogo {
 						titulo = (TituloDePropriedade)tabuleiro.getCartas().get(jogadorDaVez.getPosicaoAtual());
 						
 						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + movimento
+						+ ") tirou " + d1 + ", " + d2 + " e o peï¿½o avanï¿½ou para a casa " + movimento
 						+ " - " + ((TituloDePropriedade) tabuleiro.getCartas().get(movimento)).getNome());
 						
 						if (!titulosVendidos.contains(jogadorDaVez.getPosicaoAtual())) {
-							System.out.println("O título da propriedade " + titulo.getNome() + " está disponível por " + titulo.getPreco());
-							System.out.println("Você possui " + jogadorDaVez.getDinheiro());
+							System.out.println("O tï¿½tulo da propriedade " + titulo.getNome() + " estï¿½ disponï¿½vel por " + titulo.getPreco());
+							System.out.println("Vocï¿½ possui " + jogadorDaVez.getDinheiro());
 							negociaTituloDePropriedade(titulo, jogadorDaVez);
 						} else {
-							System.out.println("O título da propriedade " + titulo.getNome() + " não está disponível para compra!");//Alterar posteriormente
+							System.out.println("O tï¿½tulo da propriedade " + titulo.getNome() + " nï¿½o estï¿½ disponï¿½vel para compra!");//Alterar posteriormente
 						}
 												
 					} else if (tabuleiro.getCartas().get(movimento).getClass().equals(companhia.getClass())) {
 						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + movimento
+						+ ") tirou " + d1 + ", " + d2 + " e o peï¿½o avanï¿½ou para a casa " + movimento
 						+ " - " + ((Companhia) tabuleiro.getCartas().get(movimento)).getNome());
 					} else if (tabuleiro.getCartas().get(movimento).getClass().equals(sorteReves.getClass())) {
 						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + movimento
+						+ ") tirou " + d1 + ", " + d2 + " e o peï¿½o avanï¿½ou para a casa " + movimento
 						+ " - " + ((CartaSorteReves) tabuleiro.getCartas().get(movimento)).getDescricao());
 					} else if (tabuleiro.getCartas().get(movimento).getClass().equals(cartaEspecial.getClass())) {
 						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + movimento
+						+ ") tirou " + d1 + ", " + d2 + " e o peï¿½o avanï¿½ou para a casa " + movimento
 						+ " - " + ((CartaEspecial) tabuleiro.getCartas().get(movimento)).getNome());
 					}
 					
@@ -151,7 +151,7 @@ public class Jogo {
 					
 				case "sair":
 					
-					System.out.println("Você realmente quer sair do jogo (sim/não)?");
+					System.out.println("Vocï¿½ realmente quer sair do jogo (sim/nï¿½o)?");
 					String escolha = scan.nextLine();
 					boolean escolhido = false;
 					
@@ -163,14 +163,14 @@ public class Jogo {
 							escolhido = true;
 							
 							if (this.numeroDeJogadores < 2) {
-								System.out.println("Número de jogadores insuficiente para continuar o jogo.\nJogo encerrado!");
+								System.out.println("Nï¿½mero de jogadores insuficiente para continuar o jogo.\nJogo encerrado!");
 							}
 							
-						} else if (escolha.toLowerCase().equals("não")){
+						} else if (escolha.toLowerCase().equals("nï¿½o")){
 							System.out.println("Segue o jogo...");
 							escolhido = true;
 						} else {
-							System.out.println("Opção inválida! Escolha sim ou não:");
+							System.out.println("Opï¿½ï¿½o invï¿½lida! Escolha sim ou nï¿½o:");
 							escolha = escolha.replaceAll(escolha, scan.nextLine());
 						}
 						
@@ -191,11 +191,11 @@ public class Jogo {
 	}
 
 	/**
-	 * Método utilizado para calcular o avanço de cada jogador a cada rodada
+	 * Mï¿½todo utilizado para calcular o avanï¿½o de cada jogador a cada rodada
 	 * @param posicaoAntiga
 	 * @param dado1
 	 * @param dado2
-	 * @return retorna o movimento de avanço
+	 * @return retorna o movimento de avanï¿½o
 	 * @author Carlos Eduardo, Alefe e Aisllan
 	 **/
 	
@@ -206,9 +206,9 @@ public class Jogo {
 	}
 	
 	/**
-	 * Método para escolher a cor do peão
+	 * Mï¿½todo para escolher a cor do peï¿½o
 	 * @param cor
-	 * @return retorna a cor do peão de cada jogador
+	 * @return retorna a cor do peï¿½o de cada jogador
 	 * @author Carlos Eduardo, Alefe e Aisllan
 	 **/
 
@@ -244,7 +244,7 @@ public class Jogo {
 	}
 	
 	/**
-	 * Método que realiza a negociação de compra de título de propriedade
+	 * Mï¿½todo que realiza a negociaï¿½ï¿½o de compra de tï¿½tulo de propriedade
 	 * @param titulo
 	 * @param jogadorDaVez
 	 * @author Carlos Eduardo, Alefe e Aisllan
@@ -253,15 +253,15 @@ public class Jogo {
 	public void negociaTituloDePropriedade(TituloDePropriedade titulo, Jogador jogadorDaVez) {
 		
 		if (jogadorDaVez.getDinheiro() >= titulo.getPreco()) {
-			System.out.println("Você deseja comprar " + titulo.getNome() + " (sim/não)?");
+			System.out.println("Vocï¿½ deseja comprar " + titulo.getNome() + " (sim/nï¿½o)?");
 			String compra = scan.nextLine();
 		
 			if (compra.toLowerCase().equals("sim")) {
 				jogadorDaVez.adicionaTitulos(jogadorDaVez.getPosicaoAtual());
 				this.titulosVendidos.add(jogadorDaVez.getPosicaoAtual());
 				jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - titulo.getPreco());
-				System.out.println("Parabéns! Você comprou a propriedade: " + titulo.getNome());
-			} else if (compra.toLowerCase().equals("não")) {
+				System.out.println("Parabï¿½ns! Vocï¿½ comprou a propriedade: " + titulo.getNome());
+			} else if (compra.toLowerCase().equals("nï¿½o")) {
 				System.out.println("O jogo continua...");
 			}
 

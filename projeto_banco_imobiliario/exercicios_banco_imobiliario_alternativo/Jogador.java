@@ -1,4 +1,4 @@
-package com.exercicios_banco_imobiliario_alternativo;
+package exercicios_banco_imobiliario_alternativo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +72,9 @@ public class Jogador {
 		String s = "";
 		s += "========== STATUS ==========\n\n" 
 				+ "Jogador: " + this.nome.substring(0, 1).toUpperCase().concat(this.nome.substring(1)) + "(" + this.peao + "):\n"
-				+ "Posição atual: " + this.posicaoAtual + "\n"
+				+ "Posiï¿½ï¿½o atual: " + this.posicaoAtual + "\n"
 				+ "Dinheiro: " + this.dinheiro + "\n"
-				+ "Títulos de propriedade: " + this.getTitulos() + "\n";
+				+ "Tï¿½tulos de propriedade: " + this.getTitulos() + "\n";
 		return s;
 	}
 	

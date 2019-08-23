@@ -1,4 +1,4 @@
-package com.exercicios_banco_imobiliario_alternativo;
+package exercicios_banco_imobiliario_alternativo;
 
 import java.util.Scanner;
 
@@ -13,14 +13,14 @@ public class GameSystem {
 		int numeroDeJogadores = -1;
 
 		while (!escolhaQuantidade) {
-			System.out.print("Digite o número de jogadores de 2 a 8: ");
+			System.out.print("Digite o nï¿½mero de jogadores de 2 a 8: ");
 
 			try {
 				numeroDeJogadores = Integer.parseInt(scan.nextLine());
 				escolhaQuantidade = true;
 			} catch (NumberFormatException e) {
 				System.err.println(e.getMessage());
-				System.out.print("Digite o número de jogadores de 2 a 8: ");
+				System.out.print("Digite o nï¿½mero de jogadores de 2 a 8: ");
 				numeroDeJogadores = Integer.parseInt(scan.nextLine());
 			}
 		}
