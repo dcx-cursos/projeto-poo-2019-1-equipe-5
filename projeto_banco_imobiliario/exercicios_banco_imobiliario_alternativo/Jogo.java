@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /**
  * Classe para objeto do tipo jogo, onde est�o contidos, valores e m�todos para o mesmo.
- * @author Carlos Eduardo, Alefe e Aisllan
+ * @author Carlos Eduardo, Alefe, Artur e Aisllan
  */
 
 public class Jogo {
@@ -196,7 +196,7 @@ public class Jogo {
 	 * @param dado1
 	 * @param dado2
 	 * @return retorna o movimento de avan�o
-	 * @author Carlos Eduardo, Alefe e Aisllan
+	 * @author Carlos Eduardo, Alefe, Artur e Aisllan
 	 **/
 	
 	public int anda(int posicaoAntiga, int dado1, int dado2) {
@@ -209,7 +209,7 @@ public class Jogo {
 	 * M�todo para escolher a cor do pe�o
 	 * @param cor
 	 * @return retorna a cor do pe�o de cada jogador
-	 * @author Carlos Eduardo, Alefe e Aisllan
+	 * @author Carlos Eduardo, Alefe, Artur e Aisllan
 	 **/
 
 	public Peao escolhePeao(int cor) {
@@ -247,7 +247,7 @@ public class Jogo {
 	 * M�todo que realiza a negocia��o de compra de t�tulo de propriedade
 	 * @param titulo
 	 * @param jogadorDaVez
-	 * @author Carlos Eduardo, Alefe e Aisllan
+	 * @author Carlos Eduardo, Alefe, Artur e Aisllan
 	 **/
 	
 	public void negociaTituloDePropriedade(TituloDePropriedade titulo, Jogador jogadorDaVez) {
