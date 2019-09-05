@@ -2,6 +2,7 @@ package com.exercicios_banco_imobiliario.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
@@ -16,7 +17,7 @@ import com.exercicios_banco_imobiliario.exceptions.NumeroJogadoresInsuficienteEx
  * Classe para objeto do tipo jogo, onde estão contidos, valores e métodos para
  * o mesmo.
  * 
- * @author Carlos Eduardo, Alefe e Aisllan
+ * @author Carlos Eduardo, Alefe, Aisllan e Artur
  */
 
 public class Jogo {
@@ -31,6 +32,7 @@ public class Jogo {
 	private List<Integer> indicesEspeciais = Arrays.asList(0, 10, 18, 20, 24, 30);
 	private List<Integer> indicesSorteReves = Arrays.asList(2, 12, 16, 22, 27, 37);
 	private List<Integer> titulosVendidos = new ArrayList<>();
+	int contadorDeRodadas = 0;
 	
 	Scanner scan = new Scanner(System.in);
 
@@ -43,6 +45,7 @@ public class Jogo {
 	 * @throws NumeroJogadoresInsuficienteException Número de jogadores insuficiente
 	 * @throws NumeroJogadoresExcedenteException    Número de jogadores excedeu
 	 *                                              limite
+	 * @author Carlos Eduardo, Alefe, Aisllan e Artur                                             
 	 */
 
 	public void criaJogadores(int num) throws NumeroJogadoresInsuficienteException, NumeroJogadoresExcedenteException {
@@ -85,7 +88,7 @@ public class Jogo {
 	 * @param dado1
 	 * @param dado2
 	 * @return retorna o posicaoAposJogada de avanço
-	 * @author Carlos Eduardo, Alefe e Aisllan
+	 * @author @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 **/
 
 	public int anda(int posicaoAntiga, int dado1, int dado2) {
@@ -99,7 +102,7 @@ public class Jogo {
 	 * 
 	 * @param titulo
 	 * @param jogadorDaVez
-	 * @author Carlos Eduardo, Alefe e Aisllan
+	 * @author @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 **/
 
 	public void negociaTituloDePropriedade(Carta titulo, Jogador jogadorDaVez, String compra) {
@@ -117,7 +120,7 @@ public class Jogo {
 	 * 
 	 * @param jogadorDaVez
 	 * @return Retorna verdadeiro caso Propriedade ou Companhia tenha um proprietário, ou falso se Propriedade ou Companhia não tenha um proprietário
-	 * @author Aisllan 
+	 * @author @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 */
 	public boolean verificaProprietario(Jogador jogadorDaVez ) {
 		return (titulosVendidos.contains(jogadorDaVez.getPosicaoAtual()));
@@ -128,7 +131,7 @@ public class Jogo {
 	 * 
 	 * @param titulo
 	 * @param jogadorDaVez
-	 * @author Carlos Eduardo, Alefe e Aisllan
+	 * @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 **/
 	public void negociaCompanhia(Carta companhia, Jogador jogadorDaVez, String compra) {
 		if (compra.toLowerCase().equals("sim")) {
@@ -148,13 +151,30 @@ public class Jogo {
 	 * @param d1
 	 * @param d2
 	 * 
-	 * @author Aisllan
+	 * @author @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 */
 	public void pagaAluguelDaCompanhia(Companhia companhia, Jogador jogadorDaVez, int d1, int d2) {
 		
 		int aluguel = companhia.getMultiplicador()* (d1+d2);
 		jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - aluguel);
 		
+	}
+	
+	public List<Carta> embaralhador(){
+		Collections.shuffle(cartasSorteReves);
+		return cartasSorteReves;
+
+}
+	public Carta retornaUmaCarta(){
+		Carta card = cartasSorteReves.get(0);
+		cartasSorteReves.remove(0);
+		if(card.getId()== 5) {
+			return card;
+		}else {
+		cartasSorteReves.add(card);
+		return card;
+		}
+	  
 	}
 
 	public Carta retiraCartaDaPilha(int posicao) {

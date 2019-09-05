@@ -2,6 +2,7 @@ package com.exercicios_banco_imobiliario;
 
 import java.util.Scanner;
 
+import com.exercicios_banco_imobiliario.domain.CartaSorteReves;
 import com.exercicios_banco_imobiliario.domain.Companhia;
 import com.exercicios_banco_imobiliario.domain.Dado;
 import com.exercicios_banco_imobiliario.domain.Jogador;
@@ -77,8 +78,16 @@ public class GameSystem {
 
 			for (int i = 0; i < jogo.getJogadores().size(); i++) {
 				Jogador jogadorDaVez = jogo.getJogadores().get(i);
+				boolean estaNaPrisao = jogadorDaVez.getEstaNaPrisao();
+				boolean cardLivrePrisao = jogadorDaVez.getlivre();
 				if (contadorDeRodadas == 2 && !jogadorDaVez.getOpcoes().contains("status"))
 					jogadorDaVez.adicionaOpcoes("status");
+				if (estaNaPrisao == true && !jogadorDaVez.getOpcoes().contains("pagar") && !jogadorDaVez.getOpcoes().contains("carta")) {
+					jogadorDaVez.adicionaOpcoes("pagar");
+				if(cardLivrePrisao==true) {
+					jogadorDaVez.adicionaOpcoes("carta");
+				}	
+				}
 				System.out.println("A vez é do jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ")");
 
 				String opcao = "";
@@ -116,15 +125,63 @@ public class GameSystem {
 							jogadorDaVez.setPreso(true);
 							jogadorDaVez.adicionaOpcoes("pagar");
 						}
+						
+						
 					} else if (jogo.getIndicesSorteReves().contains(posicaoAposJogada)) {
+					
+						 CartaSorteReves carta = (CartaSorteReves) jogo.retornaUmaCarta();
+						 String nome = carta.getNome();
+						 int valor = carta.getValor();
+						 boolean sorteReves = carta.getSorte();
+						 int id = carta.getId();
+						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
+						+ ") tirou " + d1 + ", " + d2 + " e o peï¿½o avanï¿½ou para a casa " + posicaoAposJogada
+						+ " - " + nome + "\n");
+						if(id == 24) {
+							Dado dado3 = new Dado();
+							Dado dado4 = new Dado();
+							int d3 = dado3.rolaDado();
+							int d4 = dado4.rolaDado();
+							int somatorio = (d3 + d4);
+							if(somatorio % 2 == 0) {
+								jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro()+100);
+								System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
+								+") recebeu 100 na conta ");
+							}else {
+								jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro()-100);
+								System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
+								+ ") perdeu 100 na conta");
+							}
+						}
+						else if(id == 2) {
+						int	presente = ((valor * numeroDeJogadores -1)+ jogadorDaVez.getDinheiro());
+						jogadorDaVez.setDinheiro(presente);
+						System.out.println("Parabens o jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
+						+ ") ganhou de presente"+ presente);
 						
-					} else {
-						
+						}
+						else if(id == 5){
+							
+						}
+						else if(id == 6){
+							
+						}
+						else if(id == 7){
+							jogadorDaVez.setPosicaoAtual(0);
+							System.out.println("voce recebeu" + valor);
+						}
+						else if(sorteReves==true){
+							jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro()+valor);
+							System.out.println("voce recebeu" + valor);
+						}else {
+							jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro()-valor);
+							System.out.println("voce pagou" + valor);
+						}	
 					}
 					
-
+					
 					//Titulos De Propriedade
-					if(tabuleiro.getCartas().get(posicaoAposJogada).getClass().equals(titulo.getClass())) {
+				else if(tabuleiro.getCartas().get(posicaoAposJogada).getClass().equals(titulo.getClass())) {
 						
 						titulo = (TituloDePropriedade)tabuleiro.getCartas().get(jogadorDaVez.getPosicaoAtual());
 						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ") tirou " + d1 + ", " + d2 +
@@ -144,7 +201,7 @@ public class GameSystem {
 								}
 							//Propriedade indisponivel
 							} else {
-							System.out.println("O título da propriedade " + titulo.getNome() + " não está disponível para compra!");//Alterar posteriormente
+							System.out.println("O título da propriedade " + titulo.getNome() + " não está disponível para compra!");
 						}			 		  
 					}
 					
@@ -176,50 +233,7 @@ public class GameSystem {
 							System.out.println("O seu novo saldo é: " + jogadorDaVez.getDinheiro());
 						}
 					}
-					/*
-					 * if (tabuleiro.getCartas().get(posicaoAposJogada).getClass().equals(titulo.
-					 * getClass())) {
-					 * 
-					 * titulo =
-					 * (TituloDePropriedade)tabuleiro.getCartas().get(jogadorDaVez.getPosicaoAtual()
-					 * );
-					 * 
-					 * System.out.println("O jogador " + jogadorDaVez.getNome() + "(" +
-					 * jogadorDaVez.getPeao() + ") tirou " + d1 + ", " + d2 +
-					 * " e o peão avançou para a casa " + posicaoAposJogada + " - " +
-					 * ((TituloDePropriedade)
-					 * tabuleiro.getCartas().get(posicaoAposJogada)).getNome());
-					 * 
-					 * if (!titulosVendidos.contains(jogadorDaVez.getPosicaoAtual())) {
-					 * System.out.println("O título da propriedade " + titulo.getNome() +
-					 * " está disponível por " + titulo.getPreco());
-					 * System.out.println("Você possui " + jogadorDaVez.getDinheiro());
-					 * negociaTituloDePropriedade(titulo, jogadorDaVez); } else {
-					 * System.out.println("O título da propriedade " + titulo.getNome() +
-					 * " não está disponível para compra!");//Alterar posteriormente }
-					 * 
-					 * } else if
-					 * (tabuleiro.getCartas().get(posicaoAposJogada).getClass().equals(companhia.
-					 * getClass())) { System.out.println("O jogador " + jogadorDaVez.getNome() + "("
-					 * + jogadorDaVez.getPeao() + ") tirou " + d1 + ", " + d2 +
-					 * " e o peão avançou para a casa " + posicaoAposJogada + " - " + ((Companhia)
-					 * tabuleiro.getCartas().get(posicaoAposJogada)).getNome());
-					 * 
-					 * } else if
-					 * (tabuleiro.getCartas().get(posicaoAposJogada).getClass().equals(sorteReves.
-					 * getClass())) { System.out.println("O jogador " + jogadorDaVez.getNome() + "("
-					 * + jogadorDaVez.getPeao() + ") tirou " + d1 + ", " + d2 +
-					 * " e o peão avançou para a casa " + posicaoAposJogada + " - " +
-					 * ((CartaSorteReves)
-					 * tabuleiro.getCartas().get(posicaoAposJogada)).getDescricao());
-					 * 
-					 * } else if
-					 * (tabuleiro.getCartas().get(posicaoAposJogada).getClass().equals(cartaEspecial
-					 * .getClass())) { System.out.println("O jogador " + jogadorDaVez.getNome() +
-					 * "(" + jogadorDaVez.getPeao() + ") tirou " + d1 + ", " + d2 +
-					 * " e o peão avançou para a casa " + posicaoAposJogada + " - " +
-					 * ((CartaEspecial) tabuleiro.getCartas().get(posicaoAposJogada)).getNome()); }
-					 */
+					
 					break;
 
 				case "sair":
