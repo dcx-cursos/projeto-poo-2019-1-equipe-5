@@ -1,10 +1,9 @@
-package exercicios_banco_imobiliario_alternativo;
+package com.exercicios_banco_imobiliario.domain;
 
-public class TituloDePropriedade implements Negociavel {
+public class Carta {
 	
 	private int id;
 	private String nome;
-	private Peao proprietario;
 	private int preco;
 	private int aluguelSemCasa;
 	private int aluguelUmaCasa;
@@ -14,14 +13,18 @@ public class TituloDePropriedade implements Negociavel {
 	private int aluguelHotel;
 	private int hipoteca;
 	private int precoDaCasa;
-	private String tipo;
+	private int[] indices = null;
 	
-	public TituloDePropriedade() {}
+	//Construtor de Cartas Especiais
+	public Carta(int id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
 	
-	public TituloDePropriedade(int id, String nome, int preco, int aluguelSemCasa, int aluguelUmaCasa,
+	//Construtor de Títulos de Propriedade
+	public Carta(int id, String nome, int preco, int aluguelSemCasa, int aluguelUmaCasa,
 			int aluguelDuasCasas, int aluguelTresCasas, int aluguelQuatroCasas, int aluguelHotel, int hipoteca,
-			int precoDaCasa, String tipo) {
-		super();
+			int precoDaCasa) {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
@@ -33,50 +36,61 @@ public class TituloDePropriedade implements Negociavel {
 		this.aluguelHotel = aluguelHotel;
 		this.hipoteca = hipoteca;
 		this.precoDaCasa = precoDaCasa;
-		this.tipo = tipo;
 	}
-	
-	public void setProprietario(Peao proprietario) {
-		this.proprietario = proprietario;
+
+	//Construtor de Companhias
+	public Carta(int id, String nome, int preco, int hipoteca) {
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+		this.hipoteca = hipoteca;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
-	public Peao getProprietario() {
-		return proprietario;
-	}
+
 	public int getPreco() {
 		return preco;
 	}
+
 	public int getAluguelSemCasa() {
 		return aluguelSemCasa;
 	}
+
 	public int getAluguelUmaCasa() {
 		return aluguelUmaCasa;
 	}
+
 	public int getAluguelDuasCasas() {
 		return aluguelDuasCasas;
 	}
+
 	public int getAluguelTresCasas() {
 		return aluguelTresCasas;
 	}
+
 	public int getAluguelQuatroCasas() {
 		return aluguelQuatroCasas;
 	}
+
 	public int getAluguelHotel() {
 		return aluguelHotel;
 	}
+
 	public int getHipoteca() {
 		return hipoteca;
 	}
+
 	public int getPrecoDaCasa() {
 		return precoDaCasa;
 	}
-	public String getTipo() {
-		return tipo;
-	}	
-
+	
+	public int[] getIndices() {
+		return indices;
+	}
 }

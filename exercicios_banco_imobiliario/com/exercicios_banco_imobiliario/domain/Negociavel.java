@@ -1,4 +1,6 @@
-package exercicios_banco_imobiliario_alternativo;
+package com.exercicios_banco_imobiliario.domain;
+
+import com.exercicios_banco_imobiliario.enums.Peao;
 
 public interface Negociavel {
 

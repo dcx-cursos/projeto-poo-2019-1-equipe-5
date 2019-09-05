@@ -1,7 +1,9 @@
-package exercicios_banco_imobiliario_alternativo;
+package com.exercicios_banco_imobiliario.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.exercicios_banco_imobiliario.enums.Peao;
 
 public class Jogador {
 
@@ -9,8 +11,9 @@ public class Jogador {
 	private int dinheiro;
 	private int posicaoAtual;
 	private Peao peao;
+	private boolean preso = false;
 	private List<String> opcoes = new ArrayList<>();
-	private List<Integer> titulos = new ArrayList<>();
+	private List<Carta> titulos = new ArrayList<>();
 	
 	public Jogador(String nome, Peao peao) {
 		this.nome = nome;
@@ -46,6 +49,14 @@ public class Jogador {
 		return peao;
 	}
 	
+	public boolean isPreso() {
+		return preso;
+	}
+
+	public void setPreso(boolean preso) {
+		this.preso = preso;
+	}
+
 	public List<String> getOpcoes() {
 		return opcoes;
 	}
@@ -59,22 +70,20 @@ public class Jogador {
 	}
 	
 	public String getTitulos() {
-		String t = "";
-		Tabuleiro tabuleiro = new Tabuleiro();
-		tabuleiro.criaCartas();
-		for (int titulo : this.titulos) {
-			t += "[" + ((TituloDePropriedade)tabuleiro.getCartas().get(titulo)).getNome() + "]";
+		String titulos = "";
+		for (Carta titulo : this.titulos) {
+			titulos += "[" + titulo.getNome() + "]\n";
 		}
-		return t;
+		return titulos;
 	}
 	
 	public String status() {
 		String s = "";
 		s += "========== STATUS ==========\n\n" 
 				+ "Jogador: " + this.nome.substring(0, 1).toUpperCase().concat(this.nome.substring(1)) + "(" + this.peao + "):\n"
-				+ "Posiï¿½ï¿½o atual: " + this.posicaoAtual + "\n"
+				+ "Posição atual: " + this.posicaoAtual + "\n"
 				+ "Dinheiro: " + this.dinheiro + "\n"
-				+ "Tï¿½tulos de propriedade: " + this.getTitulos() + "\n";
+				+ "Títulos de propriedade: " + this.getTitulos() + "\n";
 		return s;
 	}
 	
@@ -82,7 +91,10 @@ public class Jogador {
 		this.opcoes.add(op);
 	}
 	
-	public void adicionaTitulos(int titulo) {
+	public void adicionaTitulos(Carta titulo) {
 		this.titulos.add(titulo);
+	}
+	public void adicionaCompanhia(Carta companhia) {
+		this.titulos.add(companhia);
 	}
 }

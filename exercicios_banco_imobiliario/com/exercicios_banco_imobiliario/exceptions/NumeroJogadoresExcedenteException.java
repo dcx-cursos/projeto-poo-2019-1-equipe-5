@@ -1,4 +1,4 @@
-package exercicios_banco_imobiliario_alternativo;
+package com.exercicios_banco_imobiliario.exceptions;
 
 public class NumeroJogadoresExcedenteException extends Exception {
 

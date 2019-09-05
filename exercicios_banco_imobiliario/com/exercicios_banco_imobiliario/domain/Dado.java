@@ -1,4 +1,4 @@
-package exercicios_banco_imobiliario_alternativo;
+package com.exercicios_banco_imobiliario.domain;
 
 import java.util.Random;
 
@@ -7,9 +7,9 @@ public class Dado {
 	private int faceSuperior;
 	
 	/**
-	 * Mï¿½todo que rola o dado sorteando um nï¿½mero de 1 a 6 e que ao final os soma com a posiï¿½ï¿½o antiga do jogador. 
+	 * Método que rola o dado sorteando um número de 1 a 6 e que ao final os soma com a posição antiga do jogador. 
 	 * @param faceSuperior
-	 * @return retorna a face superior de cada dado, ou seja, o valor utilizado para calcular o avanï¿½o do jogador
+	 * @return retorna a face superior de cada dado, ou seja, o valor utilizado para calcular o avanço do jogador
 	 * @author Carlos Eduardo, Alefe e Aisllan
 	**/
 	public int rolaDado() {
