@@ -14,6 +14,8 @@ public class Jogador {
 	private boolean preso = false;
 	private List<String> opcoes = new ArrayList<>();
 	private List<Carta> titulos = new ArrayList<>();
+	private int contadorDados = 0;
+	boolean saidaLivre = false;
 	
 	public Jogador(String nome, Peao peao) {
 		this.nome = nome;
@@ -97,4 +99,39 @@ public class Jogador {
 	public void adicionaCompanhia(Carta companhia) {
 		this.titulos.add(companhia);
 	}
-}
+	// metodo que mostra a quantidade de dados repetidos 
+	
+			public int getContadorDados() {
+				return this.contadorDados;
+			}
+			
+			// metodo que muda a quantidade do contador
+			
+			public void setContadorDados(int contadorDados) {
+				this.contadorDados = contadorDados;
+			}
+			
+			// metodo que mostra se o jogador está ou não na prisão
+			
+			public boolean getEstaNaPrisao() {
+				return this.preso;
+			}
+			
+			// metodo que muda se o jogador está ou não na prisão
+			
+			public void setEstaNaPrisao(boolean estaNaPrisao) {
+				this.preso = estaNaPrisao;
+			}
+			
+			// metodo que zera opcoes para adcionar as necessárias logo após
+			
+			public void zeraOpcoes() {
+				this.opcoes = new ArrayList<>();
+			}
+
+			public boolean getlivre() {
+				
+				return saidaLivre;
+			}
+	
+}//Fim da Classe
