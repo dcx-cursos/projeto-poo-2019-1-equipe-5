@@ -111,9 +111,10 @@ public class Jogo {
 			jogadorDaVez.adicionaTitulos(titulo);
 			this.titulosVendidos.add(jogadorDaVez.getPosicaoAtual());
 			jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - titulo.getPreco());
+			System.out.println("Parabéns! Você comprou a propriedade: " + titulo.getNome());
 		} else if (compra.toLowerCase().equals("não")) {
-			System.out.println("O jogo continua..."); 
-			} 
+			System.out.println("O jogo continua...");
+		} 
 	}
 	/**
 	 * Método que verifica se determinada Propriedade ou Companhia possui um proprietário
@@ -175,6 +176,14 @@ public class Jogo {
 		return card;
 		}
 	  
+	}
+	
+	public String listarCoresDisponiveis() {
+		String p = "";
+		for (Peao peao : Peao.values()) {
+			if (!this.getCoresIndisponiveis().contains(peao)) p += "[" + peao + "]";
+		}
+		return p;
 	}
 
 	public Carta retiraCartaDaPilha(int posicao) {

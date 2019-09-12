@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class PilhaDeCartas {
+public class PilhaDeCarta {
 
 	private List<Carta> cartas = new ArrayList<>();
-	private int[] indexDeCartasSorteReves = {2, 12, 16, 22, 27, 37};
+	private int[] indicesDeCartasSorteReves = {2, 12, 16, 22, 27, 37};
 	private Stack<Carta> cartasSorteReves = new Stack<>();
 	
 	public void criaPilhaDeCartas() {
@@ -22,17 +22,17 @@ public class PilhaDeCartas {
 		cartas.add(carta3);
 		Carta carta4 = new TituloDePropriedade(4, "Av. Nossa Senhora de Copacabana", 60, 2, 10, 30, 90, 160, 250, 30, 50, "roxo");
 		cartas.add(carta4);
-		Carta carta5 = new Companhia(5, "Carta FerroviÃ¡ria", 200, 100, 50);
+		Carta carta5 = new Companhia(5, "Cia Ferroviária", 200, 100, 50);
 		cartas.add(carta5);
 		Carta carta6 = new TituloDePropriedade(6, "Av. Brigadeiro Faria Lima", 240, 20, 100, 300, 750, 925, 1100, 120, 150, "azul");
 		cartas.add(carta6);
-		Carta carta7 = new Companhia(7, "Carta de ViaÃ§Äƒo", 200, 100, 50);
+		Carta carta7 = new Companhia(7, "Cia de Viação", 200, 100, 50);
 		cartas.add(carta7);
-		Carta carta8 = new TituloDePropriedade(8, "Av. RebouÃ§as", 220, 18, 90, 250, 700, 875, 1050, 110, 150, "azul");
+		Carta carta8 = new TituloDePropriedade(8, "Av. Rebouças", 220, 18, 90, 250, 700, 875, 1050, 110, 150, "azul");
 		cartas.add(carta8);
 		Carta carta9 = new TituloDePropriedade(9, "Av. 9 de Julho", 220, 18, 90, 250, 700, 875, 1050, 110, 150, "azul");
 		cartas.add(carta9);
-		Carta casa10 = new CartaEspecial(10, "PrisÄƒo (visitante)");
+		Carta casa10 = new CartaEspecial(10, "Prisão (visitante)");
 		cartas.add(casa10);
 		Carta carta11 = new TituloDePropriedade(11, "Av. Europa", 200, 16, 80, 220, 600, 800, 1000, 100, 100, "roxo");
 		cartas.add(carta11);
@@ -42,7 +42,7 @@ public class PilhaDeCartas {
 		cartas.add(carta13);
 		Carta carta14 = new TituloDePropriedade(14, "Av. Pacaembu", 180, 14, 70, 200, 550, 750, 950, 90, 100, "roxo");
 		cartas.add(carta14);
-		Carta carta15 = new Companhia(15, "Carta de TÃ¡xi", 150, 75, 40);
+		Carta carta15 = new Companhia(15, "Cia de Táxi", 150, 75, 40);
 		cartas.add(carta15);
 		Carta carta16 = new CartaSorteReves(16, "Sorte ou Reves");
 		cartas.add(carta16);
@@ -62,7 +62,7 @@ public class PilhaDeCartas {
 		cartas.add(carta23);
 		Carta carta24 = new CartaEspecial(24, "Imposto de Renda");
 		cartas.add(carta24);
-		Carta carta25 = new CartaEspecial(25, "Carta de NavegaÃ§Äƒo");
+		Carta carta25 = new CartaEspecial(25, "Cia de Navegação");
 		cartas.add(carta25);
 		Carta carta26 = new TituloDePropriedade(26, "Av. Brasil", 160, 12, 60, 180, 500, 700, 900, 80, 100, "amarelo");
 		cartas.add(carta26);
@@ -72,17 +72,17 @@ public class PilhaDeCartas {
 		cartas.add(carta28);
 		Carta carta29 = new TituloDePropriedade(29, "Jardim Europa", 140, 12, 60, 180, 500, 700, 900, 80, 100, "amarelo");
 		cartas.add(carta29);
-		Carta carta30 = new CartaEspecial(30, "VÃ¡ para a PrisÄƒo");
+		Carta carta30 = new CartaEspecial(30, "Vá para a Prisão");
 		cartas.add(carta30);
 		Carta carta31 = new TituloDePropriedade(31, "Copacabana", 260, 22, 110, 330, 800, 975, 1150, 130, 150, "verde");
 		cartas.add(carta31);
-		Carta carta32 = new Companhia(32, "Carta de AviaÃ§Äƒo", 200, 100, 50);
+		Carta carta32 = new Companhia(32, "Cia de Aviação", 200, 100, 50);
 		cartas.add(carta32);
 		Carta carta33 = new TituloDePropriedade(33, "Av. Vieira Souto", 320, 28, 150, 450, 1000, 1200, 1400, 160, 200, "verde");
 		cartas.add(carta33);
-		Carta carta34 = new TituloDePropriedade(34, "Av. AtlÃ¢ntica", 300, 26, 130, 390, 900, 1100, 1275, 150, 200, "verde");
+		Carta carta34 = new TituloDePropriedade(34, "Av. Atlântica", 300, 26, 130, 390, 900, 1100, 1275, 150, 200, "verde");
 		cartas.add(carta34);
-		Carta carta35 = new Companhia(35, "Carta de TÃ¡xi AÃ©reo", 200, 100, 50);
+		Carta carta35 = new Companhia(35, "Cia de Táxi Aéreo", 200, 100, 50);
 		cartas.add(carta35);
 		Carta carta36 = new TituloDePropriedade(36, "Ipanema", 300, 26, 130, 390, 900, 1100, 1275, 150, 200, "verde");
 		cartas.add(carta36);
@@ -175,7 +175,7 @@ public class PilhaDeCartas {
 	}
 
 	public int[] getIndexDeCartasSorteReves() {
-		return indexDeCartasSorteReves;
+		return indicesDeCartasSorteReves;
 	}
 		
 }

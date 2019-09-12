@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class Tabuleiro {
 
-	PilhaDeCartas pilhaDeCartas = new PilhaDeCartas();
+	PilhaDeCarta pilhaDeCartas = new PilhaDeCarta();
 	
 	private List<Carta> cartas = pilhaDeCartas.getCartas();
 	private Stack<Carta> cartasSorteReves = pilhaDeCartas.getCartasSorteReves();

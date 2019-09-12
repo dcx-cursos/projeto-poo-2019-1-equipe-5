@@ -1,7 +1,6 @@
 package com.exercicios_banco_imobiliario.enums;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public enum Peao {
@@ -38,5 +37,4 @@ public enum Peao {
 	public void adcionaCoresEscolhidas(Peao peao) {
 		coresEscolhidas.add(peao);
 	}
-	
 }
