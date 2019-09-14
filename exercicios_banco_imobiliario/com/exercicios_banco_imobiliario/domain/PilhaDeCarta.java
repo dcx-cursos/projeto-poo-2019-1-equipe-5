@@ -1,18 +1,22 @@
 package com.exercicios_banco_imobiliario.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
 public class PilhaDeCarta {
 
 	private List<Carta> cartas = new ArrayList<>();
-	private int[] indicesDeCartasSorteReves = {2, 12, 16, 22, 27, 37};
+	private List<Integer> indicesDeCartasSorteReves = new ArrayList<>(Arrays.asList(2, 12, 16, 22, 27, 37));
+	private List<Integer> indicesDeCartasEspeciais = new ArrayList<>(Arrays.asList(0, 10, 18, 20, 24, 30));
+	private List<Integer> indicesDeTitulosDePropriedade = new ArrayList<>(Arrays.asList(1, 3, 4, 6, 8, 9, 11, 13, 14, 17, 19, 21, 23, 26, 28, 29, 31, 33, 34, 36, 38, 39));
+	private List<Integer> indicesDeCompanhias = new ArrayList<>(Arrays.asList(5, 7, 15, 25, 32, 35));
 	private Stack<Carta> cartasSorteReves = new Stack<>();
 	
 	public void criaPilhaDeCartas() {
 		
-		Carta carta0 = new CartaEspecial(0, "Ponto de Partida");
+		Carta carta0 = new CartaSorteReves(0, "Ponto de Partida");
 		cartas.add(carta0);
 		Carta carta1 = new TituloDePropriedade(1, "Leblon", 100, 6, 30, 90, 270, 400, 500, 50, 50, "roxo");
 		cartas.add(carta1);
@@ -62,7 +66,7 @@ public class PilhaDeCarta {
 		cartas.add(carta23);
 		Carta carta24 = new CartaEspecial(24, "Imposto de Renda");
 		cartas.add(carta24);
-		Carta carta25 = new CartaEspecial(25, "Cia de Navegação");
+		Carta carta25 = new Companhia(25, "Cia de Navegação", 150, 75, 40);
 		cartas.add(carta25);
 		Carta carta26 = new TituloDePropriedade(26, "Av. Brasil", 160, 12, 60, 180, 500, 700, 900, 80, 100, "amarelo");
 		cartas.add(carta26);
@@ -98,7 +102,7 @@ public class PilhaDeCarta {
 	}
 	
 	public void criaPilhaDeCartasSorteReves() {
-				
+						
 		Carta cartaSorteReves1 = new CartaSorteReves(1, "Sua empresa foi multada por poluir demais", 200, false);
 		cartasSorteReves.push(cartaSorteReves1);
 		Carta cartaSorteReves2 = new CartaSorteReves(2, "O dia do seu casamento chegou, receba os presentes", 50, true);
@@ -174,8 +178,20 @@ public class PilhaDeCarta {
 		return cartasSorteReves;
 	}
 
-	public int[] getIndexDeCartasSorteReves() {
+	public List<Integer> getIndicesDeCartasSorteReves() {
 		return indicesDeCartasSorteReves;
+	}
+	
+	public List<Integer> getIndicesDeCartasEspeciais() {
+		return indicesDeCartasEspeciais;
+	}
+	
+	public List<Integer> getIndicesCompanhias() {
+		return indicesDeCompanhias;
+	}
+	
+	public List<Integer> getIndiciesTitulosDePropriedade() {
+		return indicesDeTitulosDePropriedade;
 	}
 		
 }

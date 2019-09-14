@@ -10,6 +10,7 @@ import java.util.Stack;
 import com.exercicios_banco_imobiliario.enums.Peao;
 import com.exercicios_banco_imobiliario.exceptions.CorDePeaoRepetidaException;
 import com.exercicios_banco_imobiliario.exceptions.CorInexistenteExpcetion;
+import com.exercicios_banco_imobiliario.exceptions.DinheiroInsuficienteException;
 import com.exercicios_banco_imobiliario.exceptions.NumeroJogadoresExcedenteException;
 import com.exercicios_banco_imobiliario.exceptions.NumeroJogadoresInsuficienteException;
 
@@ -24,14 +25,14 @@ public class Jogo {
 
 	private int numeroDeJogadores;
 	private Tabuleiro tabuleiro = new Tabuleiro();
+	private PilhaDeCarta pilha = new PilhaDeCarta();
 	private List<Jogador> jogadores = new ArrayList<Jogador>();
-	private List<Carta> cartas = tabuleiro.getCartas();
-	private Stack<Carta> cartasSorteReves = tabuleiro.getCartasSorteReves();
 	private List<Peao> coresExistentes = Arrays.asList(Peao.values());
 	private List<Peao> coresIndisponiveis = new ArrayList<>();
-	private List<Integer> indicesEspeciais = Arrays.asList(0, 10, 18, 20, 24, 30);
-	private List<Integer> indicesSorteReves = Arrays.asList(2, 12, 16, 22, 27, 37);
 	private List<Integer> titulosVendidos = new ArrayList<>();
+	private List<Carta> cartas;
+	private Stack<Carta> cartasSorteReves;
+	private CartaSorteReves saidaLivreDaPrisao;
 	int contadorDeRodadas = 0;
 	
 	Scanner scan = new Scanner(System.in);
@@ -75,10 +76,10 @@ public class Jogo {
 	}
 
 	public void criaCartasDoJogo() {
-		tabuleiro.pilhaDeCartas.criaPilhaDeCartas();
-		tabuleiro.pilhaDeCartas.criaPilhaDeCartasSorteReves();
-		cartas = tabuleiro.getCartas();
-		cartasSorteReves = tabuleiro.getCartasSorteReves();
+		pilha.criaPilhaDeCartas();
+		pilha.criaPilhaDeCartasSorteReves();
+		cartas = pilha.getCartas();
+		cartasSorteReves = pilha.getCartasSorteReves();
 	}
 	
 	/**
@@ -94,7 +95,7 @@ public class Jogo {
 	public int anda(int posicaoAntiga, int dado1, int dado2) {
 		int posicaoAposJogada = 0;
 		posicaoAposJogada = (posicaoAntiga + dado1 + dado2) % 40;
-		return posicaoAposJogada;
+		return tabuleiro.getPosicoesNoTabuleiro()[posicaoAposJogada];
 	}
 
 	/**
@@ -105,15 +106,13 @@ public class Jogo {
 	 * @author @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 **/
 
-	public void negociaTituloDePropriedade(Carta titulo, Jogador jogadorDaVez, String compra) {
+	public void negociaTituloDePropriedade(TituloDePropriedade titulo, Jogador jogadorDaVez) throws DinheiroInsuficienteException {
 		
-		if (compra.toLowerCase().equals("sim")) {
+		if (jogadorDaVez.getDinheiro() < titulo.getPreco()) throw new DinheiroInsuficienteException("Você não tem dinheiro suficiente!");
+		else {
 			jogadorDaVez.adicionaTitulos(titulo);
 			this.titulosVendidos.add(jogadorDaVez.getPosicaoAtual());
 			jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - titulo.getPreco());
-			System.out.println("Parabéns! Você comprou a propriedade: " + titulo.getNome());
-		} else if (compra.toLowerCase().equals("não")) {
-			System.out.println("O jogo continua...");
 		} 
 	}
 	/**
@@ -123,8 +122,12 @@ public class Jogo {
 	 * @return Retorna verdadeiro caso Propriedade ou Companhia tenha um proprietário, ou falso se Propriedade ou Companhia não tenha um proprietário
 	 * @author @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 */
-	public boolean verificaProprietario(Jogador jogadorDaVez ) {
-		return (titulosVendidos.contains(jogadorDaVez.getPosicaoAtual()));
+	public Peao verificaProprietarioTitulo(TituloDePropriedade titulo ) {
+		return titulo.getProprietario();
+	}
+	
+	public Peao verificaProprietarioCompanhia(Companhia companhia ) {
+		return companhia.getProprietario();
 	}
 	
 	/**
@@ -134,14 +137,14 @@ public class Jogo {
 	 * @param jogadorDaVez
 	 * @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 **/
-	public void negociaCompanhia(Carta companhia, Jogador jogadorDaVez, String compra) {
-		if (compra.toLowerCase().equals("sim")) {
+
+	public void negociaCompanhia(Companhia companhia, Jogador jogadorDaVez) throws DinheiroInsuficienteException {
+		if (jogadorDaVez.getDinheiro() < companhia.getPreco()) throw new DinheiroInsuficienteException("Você não tem dinheiro suficiente!");
+		else {
 			jogadorDaVez.adicionaCompanhia(companhia);
 			this.titulosVendidos.add(jogadorDaVez.getPosicaoAtual());
 			jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - companhia.getPreco());
-		} else if (compra.toLowerCase().equals("não")) {
-			System.out.println("O jogo continua..."); 
-			} 
+		} 
 	}
 	
 	/**
@@ -154,27 +157,27 @@ public class Jogo {
 	 * 
 	 * @author @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 */
-	public void pagaAluguelDaCompanhia(Companhia companhia, Jogador jogadorDaVez, int d1, int d2) {
+	public void pagaAluguelDaCompanhia(Companhia companhia, Jogador jogadorDaVez, int aluguel) {
 		
-		int aluguel = companhia.getMultiplicador()* (d1+d2);
 		jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - aluguel);
 		
+		for (Jogador j : jogadores) {
+			if (j.getPeao().equals(companhia.getProprietario())) {
+				j.setDinheiro(j.getDinheiro() + aluguel);
+			}
+		}
 	}
 	
-	public List<Carta> embaralhador(){
+	public List<Carta> embaralhar(){
 		Collections.shuffle(cartasSorteReves);
 		return cartasSorteReves;
 
 }
-	public Carta retornaUmaCarta(){
-		Carta card = cartasSorteReves.get(0);
-		cartasSorteReves.remove(0);
-		if(card.getId()== 5) {
-			return card;
-		}else {
-		cartasSorteReves.add(card);
+	public Carta retiraUmaCartaSorteReves(){
+		CartaSorteReves card = (CartaSorteReves)cartasSorteReves.pop();
+		
+		if(card.getId() != 5) cartasSorteReves.add(0, card);
 		return card;
-		}
 	  
 	}
 	
@@ -185,9 +188,14 @@ public class Jogo {
 		}
 		return p;
 	}
+	
+	public String mensagem(Jogador j, int d1, int d2) {
+		return "O jogador " + j.getNome() + "(" + j.getPeao() + ") tirou " + d1 + ", " + d2
+				+ " e o peão avançou para a casa " + j.getPosicaoAtual();
+	}
 
 	public Carta retiraCartaDaPilha(int posicao) {
-		return cartas.get(posicao);
+		return pilha.getCartas().get(posicao);
 	}
 
 	public List<Jogador> getJogadores() {
@@ -214,11 +222,15 @@ public class Jogo {
 		return cartasSorteReves;
 	}
 
-	public List<Integer> getIndicesEspeciais() {
-		return indicesEspeciais;
+	public PilhaDeCarta getPilha() {
+		return pilha;
 	}
 
-	public List<Integer> getIndicesSorteReves() {
-		return indicesSorteReves;
+	public CartaSorteReves getSaidaLivreDaPrisao() {
+		return saidaLivreDaPrisao;
+	}
+
+	public void setSaidaLivreDaPrisao(CartaSorteReves saidaLivreDaPrisao) {
+		this.saidaLivreDaPrisao = saidaLivreDaPrisao;
 	}
 }

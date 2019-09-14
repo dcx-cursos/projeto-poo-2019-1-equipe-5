@@ -2,17 +2,18 @@ package com.exercicios_banco_imobiliario;
 
 import java.util.Scanner;
 
+import com.exercicios_banco_imobiliario.domain.CartaEspecial;
 import com.exercicios_banco_imobiliario.domain.CartaSorteReves;
 import com.exercicios_banco_imobiliario.domain.Companhia;
 import com.exercicios_banco_imobiliario.domain.Dado;
 import com.exercicios_banco_imobiliario.domain.Jogador;
 import com.exercicios_banco_imobiliario.domain.Jogo;
-import com.exercicios_banco_imobiliario.domain.PilhaDeCarta;
 import com.exercicios_banco_imobiliario.domain.Tabuleiro;
 import com.exercicios_banco_imobiliario.domain.TituloDePropriedade;
 import com.exercicios_banco_imobiliario.enums.Peao;
 import com.exercicios_banco_imobiliario.exceptions.CorDePeaoRepetidaException;
 import com.exercicios_banco_imobiliario.exceptions.CorInexistenteExpcetion;
+import com.exercicios_banco_imobiliario.exceptions.DinheiroInsuficienteException;
 import com.exercicios_banco_imobiliario.exceptions.NumeroJogadoresExcedenteException;
 import com.exercicios_banco_imobiliario.exceptions.NumeroJogadoresInsuficienteException;
 
@@ -22,8 +23,6 @@ public class GameSystem {
 
 		Jogo jogo = new Jogo();
 		Tabuleiro tabuleiro = new Tabuleiro();
-		TituloDePropriedade titulo = new TituloDePropriedade(0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
-		Companhia companhia = new Companhia(0, null, 0, 0, 0);
 		Scanner scan = new Scanner(System.in);
 		int numeroDeJogadores = -1;
 		int contadorDeRodadas = 0;
@@ -42,17 +41,17 @@ public class GameSystem {
 		}
 
 		for (int i = 0; i < numeroDeJogadores; i++) {
-			
+
 			boolean peaoEscolhido = false;
 			System.out.println("\nDigite o nome do jogador " + (i + 1) + ":");
 			String nome = scan.nextLine();
-			
+
 			while (!peaoEscolhido) {
 				System.out.println("\nEscolha a cor do peão de acordo com as cores dispoíveis:");
 				System.out.println(jogo.listarCoresDisponiveis());
 				String cor = scan.nextLine();
 				Peao peao = Peao.setPeao(cor.toUpperCase());
-				
+
 				try {
 					jogo.escolherPeao(peao, nome);
 					peaoEscolhido = true;
@@ -75,10 +74,12 @@ public class GameSystem {
 			for (int i = 0; i < jogo.getJogadores().size(); i++) {
 				Jogador jogadorDaVez = jogo.getJogadores().get(i);
 				boolean estaPreso = jogadorDaVez.getEstaNaPrisao();
-				
-				if (contadorDeRodadas == 2)	jogadorDaVez.adicionaOpcoes("status");
-				if (estaPreso) jogadorDaVez.adicionaOpcoes("pagar");
-					
+
+				if (contadorDeRodadas == 2)
+					jogadorDaVez.adicionaOpcoes("status");
+				if (estaPreso)
+					jogadorDaVez.adicionaOpcoes("pagar");
+
 				System.out.println("A vez é do jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ")");
 
 				String opcao = "";
@@ -87,9 +88,11 @@ public class GameSystem {
 					System.out.println("Digite o comando desejado:");
 					jogadorDaVez.imprimeOpcoes();
 					opcao = opcao.replaceAll(opcao, scan.nextLine());
-					
-					if (jogadorDaVez.getOpcoes().contains(opcao.toLowerCase())) break;
-					else System.out.println("Opção inválida!");
+
+					if (jogadorDaVez.getOpcoes().contains(opcao.toLowerCase()))
+						break;
+					else
+						System.out.println("Opção inválida!");
 				}
 
 				switch (opcao.toLowerCase()) {
@@ -99,129 +102,159 @@ public class GameSystem {
 					int d1 = Dado.rolaDado();
 					int d2 = Dado.rolaDado();
 					int posicaoAposJogada = jogo.anda(jogadorDaVez.getPosicaoAtual(), d1, d2);
-					
-					jogadorDaVez.setPosicaoAtual(posicaoAposJogada);
+					jogadorDaVez.setPosicaoAtual(tabuleiro.getPosicoesNoTabuleiro()[posicaoAposJogada]);
 
-					if (jogo.getIndicesEspeciais().contains(posicaoAposJogada)) {
-						String nome = jogo.getCartas().get(posicaoAposJogada).getNome();
+					if (jogo.getPilha().getIndicesDeCartasEspeciais().contains(posicaoAposJogada)) {
+						CartaEspecial carta = (CartaEspecial) jogo.getPilha().getCartas().get(posicaoAposJogada);
 
-						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-								+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + posicaoAposJogada
-								+ " - " + nome + "\n");
+						System.out.println(jogo.mensagem(jogadorDaVez, d1, d2) + " - " + carta.getNome());
 
 						if (posicaoAposJogada == 30) {
-							jogadorDaVez.setPosicaoAtual(10); //Jogador enviado para a prisão
+							jogadorDaVez.setPosicaoAtual(10); // Jogador enviado para a prisão
 							jogadorDaVez.setPreso(true);
 							jogadorDaVez.adicionaOpcoes("pagar");
 						}
-						
-						
-					} else if (jogo.getIndicesSorteReves().contains(posicaoAposJogada)) {
-					
-						 CartaSorteReves carta = (CartaSorteReves) jogo.retornaUmaCarta();
-						 String nome = carta.getNome();
-						 int valor = carta.getValor();
-						 boolean sorteReves = carta.getSorte();
-						 int id = carta.getId();
-						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") tirou " + d1 + ", " + d2 + " e o peão avançou para a casa " + posicaoAposJogada
-						+ " - " + nome + "\n");
-						if(id == 24) {
-							Dado dado3 = new Dado();
-							Dado dado4 = new Dado();
-							int d3 = dado3.rolaDado();
-							int d4 = dado4.rolaDado();
-							int somatorio = (d3 + d4);
-							if(somatorio % 2 == 0) {
-								jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro()+100);
+
+					} else if (jogo.getPilha().getIndicesDeCartasSorteReves().contains(posicaoAposJogada)) {
+
+						CartaSorteReves carta = (CartaSorteReves) jogo.retiraUmaCartaSorteReves();
+						System.out.println(jogo.mensagem(jogadorDaVez, d1, d2) + " - " + carta.getNome());
+
+						if (carta.getId() == 12) {
+							d1 = Dado.rolaDado();
+							d2 = Dado.rolaDado();
+							jogadorDaVez.setPosicaoAtual(jogo.anda(jogadorDaVez.getPosicaoAtual(), d1, d2));
+							i--;
+
+						} else if (carta.getId() == 2) {
+							for (Jogador j : jogo.getJogadores()) {
+								if (!j.equals(jogadorDaVez)) {
+									j.setDinheiro(j.getDinheiro() - 100);
+								}
+							}
+							jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() + (jogo.getNumeroDeJogadores() * 100));
+
+						} else if (carta.getId() == 5) {
+							boolean cartaLivreDaPrisaoLivre = true;
+
+							for (Jogador j : jogo.getJogadores()) {
+								if (j.isSaidaLivre())
+									cartaLivreDaPrisaoLivre = false;
+							}
+
+							if (cartaLivreDaPrisaoLivre) {
+								jogo.setSaidaLivreDaPrisao(carta);
+								jogadorDaVez.setSaidaLivre(true);
+							}
+						} else if (carta.getId() == 6) {
+							jogadorDaVez.setPreso(true);
+
+						} else {
+
+							if (carta.getId() == 24 && (d1 + d2) % 2 == 0)
+								carta.setSorte(true);
+							else if (carta.getId() == 24 && (d1 + d2) % 2 == 1)
+								carta.setSorte(false);
+
+							// Demais cartas
+							if (carta.getSorte() == true) {
+								System.out.println(jogo.mensagem(jogadorDaVez, d1, d2) + " - " + carta.getNome());
+								System.out.println("- O banco lhe pagou $" + carta.getValor());
+								jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() + carta.getValor());
+							} else if (carta.getSorte() == false) {
+								jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - carta.getValor());
 								System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-								+") recebeu 100 na conta ");
-							}else {
-								jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro()-100);
-								System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-								+ ") perdeu 100 na conta");
+										+ ") perdeu 100 na conta");
 							}
 						}
-						else if(id == 2) {
-						int	presente = ((valor * numeroDeJogadores -1)+ jogadorDaVez.getDinheiro());
-						jogadorDaVez.setDinheiro(presente);
-						System.out.println("Parabens o jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
-						+ ") ganhou de presente"+ presente);
-						
-						}
-						else if(id == 5){
-							
-						}
-						else if(id == 6){
-							
-						}
-						else if(id == 7){
-							jogadorDaVez.setPosicaoAtual(0);
-							System.out.println("voce recebeu" + valor);
-						}
-						else if(sorteReves==true){
-							jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro()+valor);
-							System.out.println("voce recebeu" + valor);
-						}else {
-							jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro()-valor);
-							System.out.println("voce pagou" + valor);
-						}	
 					}
-					
-					
-					//Titulos De Propriedade
-				else if(tabuleiro.getCartas().get(posicaoAposJogada).getClass().equals(titulo.getClass())) {
-						
-						titulo = (TituloDePropriedade)tabuleiro.getCartas().get(jogadorDaVez.getPosicaoAtual());
-						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ") tirou " + d1 + ", " + d2 +
-						" e o peão avançou para a casa " + posicaoAposJogada + " - " + ((TituloDePropriedade)tabuleiro.getCartas().get(posicaoAposJogada)).getNome());
-						//Verifica se propriedade tem um prorietario
-						if(!jogo.verificaProprietario(jogadorDaVez)) {
+
+					// Titulos De Propriedade
+					else if (jogo.getPilha().getIndiciesTitulosDePropriedade().contains(posicaoAposJogada)) {
+
+						TituloDePropriedade titulo = (TituloDePropriedade)jogo.getPilha().getCartas().get(posicaoAposJogada);
+
+						System.out.println(jogo.mensagem(jogadorDaVez, d1, d2) + " - " + titulo.getNome());
+
+						// Verifica se a propriedade tem um prorietario
+						if (jogo.verificaProprietarioTitulo(titulo) == null) {
+
 							System.out.println("O título da propriedade " + titulo.getNome() + " está disponível por " + titulo.getPreco());
 							System.out.println("Você possui " + jogadorDaVez.getDinheiro());
-							//Realiza compra de propriedade
+
 							if (jogadorDaVez.getDinheiro() >= titulo.getPreco()) {
+
 								System.out.println("Você deseja comprar " + titulo.getNome() + " (sim/não)?");
 								String compra = scan.nextLine();
-								jogo.negociaTituloDePropriedade(titulo, jogadorDaVez, compra); 
-								}else {
-									System.out.println("Voçê não possui Dinheiro o suficiente!");
-								}
-							//Propriedade indisponivel
-							} else {
-							System.out.println("O título da propriedade " + titulo.getNome() + " não está disponível para compra!");
-						}			 		  
+
+								if (compra.toLowerCase().equals("sim"))
+									
+									try {
+										jogo.negociaTituloDePropriedade(titulo, jogadorDaVez);
+										System.out.println("Parabéns! Você comprou a propriedade: " + titulo.getNome());
+									} catch (DinheiroInsuficienteException e) {
+										System.out.println(e.getMessage());
+									}
+
+							// Propriedade indisponivel
+						} else {
+							
+							Jogador proprietario = null;
+							for (Jogador j : jogo.getJogadores()) {
+								if (j.getPeao().equals(titulo.getProprietario())) proprietario = j;
+							}
+							
+							System.out.println("A " + titulo.getNome() + " pertence a " + proprietario.getNome() + "(" + proprietario.getPeao() + ")");
+							System.out.println("Pague " + titulo.getPreco());
+							//implementar pagamento de acordo com as propriedades que possui.
+						}
+							
+						}
 					}
-					
-					//Companhias
-					if(tabuleiro.getCartas().get(posicaoAposJogada).getClass().equals(companhia.getClass())) {
-						
-						companhia = (Companhia)tabuleiro.getCartas().get(jogadorDaVez.getPosicaoAtual());
-						System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ") tirou " + d1 + ", " + d2 +
-						" e o peão avançou para a casa " + posicaoAposJogada + " - " + ((Companhia)tabuleiro.getCartas().get(posicaoAposJogada)).getNome());
-						
-						if(!jogo.verificaProprietario(jogadorDaVez)) {
+
+					// Companhias
+					if (jogo.getPilha().getIndicesCompanhias().contains(posicaoAposJogada)) {
+
+						Companhia companhia = (Companhia)jogo.getPilha().getCartas().get(posicaoAposJogada);
+						System.out.println(jogo.mensagem(jogadorDaVez, d1, d2) + " - " + companhia.getNome());
+
+						if (jogo.verificaProprietarioCompanhia(companhia) == null) {
 							System.out.println("A " + companhia.getNome() + " está disponível por " + companhia.getPreco());
 							System.out.println("Você possui " + jogadorDaVez.getDinheiro());
-							
-							if(jogadorDaVez.getDinheiro() >= titulo.getPreco()) {
-								System.out.println("Vocï¿½ deseja comprar " + companhia.getNome() + " (sim/nï¿½o)?");
+
+							if (jogadorDaVez.getDinheiro() >= companhia.getPreco()) {
+								System.out.println("Você deseja comprar " + companhia.getNome() + " (sim/não)?");
 								String compra = scan.nextLine();
-								jogo.negociaCompanhia(companhia, jogadorDaVez, compra);
-								System.out.println("Parabéns! Você comprou a companhia: " + companhia.getNome());	
-							}else{
-								System.out.println("Voçê não possui Dinheiro o suficiente!");
+								
+								if (compra.toLowerCase().equals("sim")) {
+									try {
+										jogo.negociaCompanhia(companhia, jogadorDaVez);
+										System.out.println("Parabéns! Você comprou a companhia: " + companhia.getNome());
+									} catch (DinheiroInsuficienteException e) {
+										System.out.println(e.getMessage());
+									}
+								}
+								
+							} else {
+								System.out.println("Voçê não possui Dinheiro suficiente!");
 							}
-						}else {
-							System.out.println("O t�tulo da Commpanhia: " + companhia.getNome() + " n�o est� dispon�vel para compra. Já tem proprietário." );
+							
+						} else if (companhia.getProprietario().equals(jogadorDaVez.getPeao())) {
+							System.out.println("Bem vindo a sua " + companhia.getNome());
+							
+						} else {
+							
+							int aluguel = companhia.getMultiplicador() * (d1 + d2);
+							System.out.println("O título da Commpanhia: " + companhia.getNome()
+									+ " não está disponível para compra. Já tem proprietário.");
 							System.out.println("Pague o aluguel ao dono da Companhia!");
-							System.out.println("Voc� possui " + jogadorDaVez.getDinheiro());
-							System.out.println("O alguel da Companhia custa " + companhia.getMultiplicador() * (d1+d2));
-							jogo.pagaAluguelDaCompanhia(companhia, jogadorDaVez, d1, d2);
+							System.out.println("Você possui " + jogadorDaVez.getDinheiro());
+							System.out.println("O alguel da Companhia custa " + aluguel);
+							jogo.pagaAluguelDaCompanhia(companhia, jogadorDaVez, aluguel);
 							System.out.println("O seu novo saldo é: " + jogadorDaVez.getDinheiro());
 						}
 					}
-					
+
 					break;
 
 				case "sair":
@@ -265,8 +298,8 @@ public class GameSystem {
 				}// fim do switch
 			} // fim do for
 		} // fim do while
-				
+
 		scan.close();
-	}//fim do main
+	}// fim do main
 
 }// fim da classe GameSystem

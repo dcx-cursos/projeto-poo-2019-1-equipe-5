@@ -1,21 +1,16 @@
 package com.exercicios_banco_imobiliario.domain;
 
-import java.util.List;
-import java.util.Stack;
-
 public class Tabuleiro {
 
-	PilhaDeCarta pilhaDeCartas = new PilhaDeCarta();
+	private int[] posicoesNoTabuleiro = new int[39];
 	
-	private List<Carta> cartas = pilhaDeCartas.getCartas();
-	private Stack<Carta> cartasSorteReves = pilhaDeCartas.getCartasSorteReves();
-	
-	public List<Carta> getCartas() {
-		return cartas;
-	}
-
-	public Stack<Carta> getCartasSorteReves() {
-		return cartasSorteReves;
+	public Tabuleiro() {
+		for (int i = 0; i < this.posicoesNoTabuleiro.length; i++) {
+			this.posicoesNoTabuleiro[i] = i;
+		}
 	}
 	
+	public int[] getPosicoesNoTabuleiro() {
+		return posicoesNoTabuleiro;
+	}
 }
