@@ -83,7 +83,7 @@ public class Jogador {
 	public String getTitulos() {
 		String titulos = "";
 		for (TituloDePropriedade titulo : this.titulos) {
-			titulos += "[" + titulo.getNome() + "]\n";
+			titulos += "[" + titulo.getNome() + "]";
 		}
 		return titulos;
 	}
@@ -93,7 +93,8 @@ public class Jogador {
 		s += "========== STATUS ==========\n\n" + "Jogador: "
 				+ this.nome.substring(0, 1).toUpperCase().concat(this.nome.substring(1)) + "(" + this.peao + "):\n"
 				+ "Posição atual: " + this.posicaoAtual + "\n" + "Dinheiro: " + this.dinheiro + "\n"
-				+ "Títulos de propriedade: " + this.getTitulos() + "\n";
+				+ "Títulos de propriedade: " + this.getTitulos() + "\n"
+				+ "Companhias: " + this.getCompanhias();
 		return s;
 	}
 

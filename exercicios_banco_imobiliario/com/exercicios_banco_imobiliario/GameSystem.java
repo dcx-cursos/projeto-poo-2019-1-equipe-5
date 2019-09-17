@@ -75,18 +75,17 @@ public class GameSystem {
 				Jogador jogadorDaVez = jogo.getJogadores().get(i);
 				boolean estaPreso = jogadorDaVez.getEstaNaPrisao();
 
-				if (contadorDeRodadas == 2)
+				if (contadorDeRodadas == 2 && !jogadorDaVez.getOpcoes().contains("status"))
 					jogadorDaVez.adicionaOpcoes("status");
 				if (estaPreso)
 					jogadorDaVez.adicionaOpcoes("pagar");
 
-				System.out.println("A vez é do jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ")");
+				System.out.println("A vez é do jogador(a) " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ")");
 
 				String opcao = "";
 				while (true) {
 					System.out.println("Comandos disponíveis: " + jogadorDaVez.imprimeOpcoes());
 					System.out.println("Digite o comando desejado:");
-					jogadorDaVez.imprimeOpcoes();
 					opcao = opcao.replaceAll(opcao, scan.nextLine());
 
 					if (jogadorDaVez.getOpcoes().contains(opcao.toLowerCase()))
@@ -109,10 +108,17 @@ public class GameSystem {
 
 						System.out.println(jogo.mensagem(jogadorDaVez, d1, d2) + " - " + carta.getNome());
 
-						if (posicaoAposJogada == 30) {
+						if (posicaoAposJogada == 18) {
+							System.out.println("Receba 200");
+							jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() + 200);
+						} else if (posicaoAposJogada == 24) {
+							System.out.println("Pague 200");
+							jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - 200);
+						} else if (posicaoAposJogada == 30) {
 							jogadorDaVez.setPosicaoAtual(10); // Jogador enviado para a prisão
 							jogadorDaVez.setPreso(true);
 							jogadorDaVez.adicionaOpcoes("pagar");
+							System.out.println("Você foi enviado para prisão!");
 						}
 
 					} else if (jogo.getPilha().getIndicesDeCartasSorteReves().contains(posicaoAposJogada)) {
@@ -151,9 +157,7 @@ public class GameSystem {
 
 						} else {
 
-							if (carta.getId() == 24 && (d1 + d2) % 2 == 0)
-								carta.setSorte(true);
-							else if (carta.getId() == 24 && (d1 + d2) % 2 == 1)
+							if (carta.getId() == 24 && (d1 + d2) % 2 == 1)
 								carta.setSorte(false);
 
 							// Demais cartas
@@ -166,8 +170,12 @@ public class GameSystem {
 								System.out.println("O jogador " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao()
 										+ ") perdeu 100 na conta");
 							}
-						}
-					}
+						} //fim do if
+						
+						System.out.println("\nPressione qualquer tecla para continuar...");
+						scan.nextLine();
+						
+					} //fim do if
 
 					// Titulos De Propriedade
 					else if (jogo.getPilha().getIndiciesTitulosDePropriedade().contains(posicaoAposJogada)) {
@@ -191,7 +199,7 @@ public class GameSystem {
 									
 									try {
 										jogo.negociaTituloDePropriedade(titulo, jogadorDaVez);
-										System.out.println("Parabéns! Você comprou a propriedade: " + titulo.getNome());
+										System.out.println("Parabéns! Você comprou a propriedade: " + titulo.getNome() + "\n");
 									} catch (DinheiroInsuficienteException e) {
 										System.out.println(e.getMessage());
 									}
@@ -278,6 +286,7 @@ public class GameSystem {
 
 						} else if (escolha.toLowerCase().equals("não")) {
 							System.out.println("Segue o jogo...");
+							i--;
 							escolhido = true;
 						} else {
 							System.out.println("Opção inválida! Escolha sim ou não:");
