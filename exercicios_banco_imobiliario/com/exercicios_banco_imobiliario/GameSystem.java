@@ -77,7 +77,7 @@ public class GameSystem {
 
 				if (contadorDeRodadas == 2 && !jogadorDaVez.getOpcoes().contains("status"))
 					jogadorDaVez.adicionaOpcoes("status");
-				if (estaPreso)
+				if (estaPreso && !jogadorDaVez.getOpcoes().contains("status"))
 					jogadorDaVez.adicionaOpcoes("pagar");
 
 				System.out.println("A vez é do jogador(a) " + jogadorDaVez.getNome() + "(" + jogadorDaVez.getPeao() + ")");
@@ -98,8 +98,10 @@ public class GameSystem {
 
 				case "jogar":
 
-					int d1 = Dado.rolaDado();
-					int d2 = Dado.rolaDado();
+					//int d1 = Dado.rolaDado();
+					//int d2 = Dado.rolaDado();
+					int d1 = 15;
+					int d2 = 15;
 					int posicaoAposJogada = jogo.anda(jogadorDaVez.getPosicaoAtual(), d1, d2);
 					jogadorDaVez.setPosicaoAtual(tabuleiro.getPosicoesNoTabuleiro()[posicaoAposJogada]);
 
@@ -162,7 +164,6 @@ public class GameSystem {
 
 							// Demais cartas
 							if (carta.getSorte() == true) {
-								System.out.println(jogo.mensagem(jogadorDaVez, d1, d2) + " - " + carta.getNome());
 								System.out.println("- O banco lhe pagou $" + carta.getValor());
 								jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() + carta.getValor());
 							} else if (carta.getSorte() == false) {
@@ -280,7 +281,7 @@ public class GameSystem {
 
 							if (numeroDeJogadores < 2) {
 								System.out.println(
-										"Número de jogadores insuficiente para continuar o jogo.\nJogo encerrado!");
+ 										"Número de jogadores insuficiente para continuar o jogo.\nJogo encerrado!");
 								System.exit(0);
 							}
 

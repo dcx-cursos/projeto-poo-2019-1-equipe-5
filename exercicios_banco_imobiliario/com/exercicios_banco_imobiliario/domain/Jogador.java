@@ -94,7 +94,8 @@ public class Jogador {
 				+ this.nome.substring(0, 1).toUpperCase().concat(this.nome.substring(1)) + "(" + this.peao + "):\n"
 				+ "Posição atual: " + this.posicaoAtual + "\n" + "Dinheiro: " + this.dinheiro + "\n"
 				+ "Títulos de propriedade: " + this.getTitulos() + "\n"
-				+ "Companhias: " + this.getCompanhias();
+				+ "Companhias: " + this.getCompanhias() + "\n"
+				+ "============================\n";
 		return s;
 	}
 
@@ -152,8 +153,12 @@ public class Jogador {
 		return saidaLivre;
 	}
 
-	public List<Companhia> getCompanhias() {
-		return companhias;
+	public String getCompanhias() {
+		String companhia = "";
+		for (Companhia c : this.companhias) {
+			companhia += "[" + c.getNome() + "]";
+		}
+		return companhia;
 	}
 
 	public void adicionaCompanhia(Companhia companhia) {
