@@ -157,15 +157,26 @@ public class Jogo {
 	 * 
 	 * @author @author Carlos Eduardo, Alefe, Aisllan e Artur
 	 */
-	public void pagaAluguelDaCompanhia(Companhia companhia, Jogador jogadorDaVez, int aluguel) {
+	public int pagaAluguelDaCompanhia(Companhia companhia, Jogador jogadorDaVez, Jogador proprietario, int somatorioDados) {
 		
-		jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - aluguel);
+		int valor = companhia.getMultiplicador() * somatorioDados;
 		
-		for (Jogador j : jogadores) {
-			if (j.getPeao().equals(companhia.getProprietario())) {
-				j.setDinheiro(j.getDinheiro() + aluguel);
-			}
+		if (jogadorDaVez.getDinheiro() >= valor) {
+			jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - valor);
+			proprietario.setDinheiro(proprietario.getDinheiro() + valor);
 		}
+		return valor;
+	}
+	
+	public int pagaAluguelDoTitulo(TituloDePropriedade titulo, Jogador jogadorDaVez, Jogador j) {
+
+		int aluguel = titulo.obterValorAluguel();
+					
+		if (jogadorDaVez.getDinheiro() >= aluguel) {
+			j.setDinheiro(j.getDinheiro() + aluguel);
+			jogadorDaVez.setDinheiro(jogadorDaVez.getDinheiro() - aluguel);
+		}
+		return aluguel;
 	}
 	
 	public List<Carta> embaralhar(){
@@ -233,4 +244,5 @@ public class Jogo {
 	public void setSaidaLivreDaPrisao(CartaSorteReves saidaLivreDaPrisao) {
 		this.saidaLivreDaPrisao = saidaLivreDaPrisao;
 	}
+
 }

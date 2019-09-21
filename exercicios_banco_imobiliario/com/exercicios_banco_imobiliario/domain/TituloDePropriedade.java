@@ -3,7 +3,7 @@ package com.exercicios_banco_imobiliario.domain;
 import com.exercicios_banco_imobiliario.enums.Peao;
 
 public class TituloDePropriedade extends Carta implements Negociavel {
-	
+
 	private int preco;
 	private int aluguelSemCasa;
 	private int aluguelUmaCasa;
@@ -15,7 +15,8 @@ public class TituloDePropriedade extends Carta implements Negociavel {
 	private int precoDaCasa;
 	private String tipo;
 	private Peao proprietario;
-		
+	private int construcao = 3;
+
 	public TituloDePropriedade(int id, String nome, int preco, int aluguelSemCasa, int aluguelUmaCasa,
 			int aluguelDuasCasas, int aluguelTresCasas, int aluguelQuatroCasas, int aluguelHotel, int hipoteca,
 			int precoDaCasa, String tipo) {
@@ -31,7 +32,7 @@ public class TituloDePropriedade extends Carta implements Negociavel {
 		this.precoDaCasa = precoDaCasa;
 		this.tipo = tipo;
 	}
-	
+
 	public int getPreco() {
 		return preco;
 	}
@@ -67,11 +68,11 @@ public class TituloDePropriedade extends Carta implements Negociavel {
 	public int getPrecoDaCasa() {
 		return precoDaCasa;
 	}
-	
+
 	public String getTipo() {
 		return tipo;
 	}
-	
+
 	public Peao getProprietario() {
 		return proprietario;
 	}
@@ -79,6 +80,32 @@ public class TituloDePropriedade extends Carta implements Negociavel {
 	@Override
 	public void setProprietario(Peao peao) {
 		this.proprietario = peao;
+	}
+
+	public int obterValorAluguel() {
+
+		switch (construcao) {
+
+		case 0:
+			return getAluguelSemCasa();
+		case 1:
+			return getAluguelUmaCasa();
+		case 2:
+			return getAluguelDuasCasas();
+		case 3:
+			return getAluguelTresCasas();
+		case 4:
+			return getAluguelQuatroCasas();
+		case 5:
+			return getAluguelHotel();
+
+		}
+
+		return 0;
+	}
+
+	public void setConstrucao(int construcao) {
+		this.construcao = construcao;
 	}
 
 }

@@ -16,7 +16,15 @@ public class Jogador {
 	private List<TituloDePropriedade> titulos = new ArrayList<>();
 	private List<Companhia> companhias = new ArrayList<>();
 	private int contadorDados = 0;
-	boolean saidaLivre = false;
+	private boolean saidaLivre = false;
+	private int monopolioVermelhoFraco = 0;
+	private int monopolioAzulCeu = 0;
+	private int monopolioVioleta = 0;
+	private int monopolioLaranja = 0;
+	private int monopolioVermelhoForte = 0;
+	private int monopolioAmarelo = 0;
+	private int monopolioVerde = 0;
+	private int monopolioAzulEscuro = 0;
 
 	public Jogador(String nome, Peao peao) {
 		this.nome = nome;
@@ -70,6 +78,70 @@ public class Jogador {
 
 	public void setSaidaLivre(boolean saidaLivre) {
 		this.saidaLivre = saidaLivre;
+	}
+
+	public int getMonopolioVermelhoFraco() {
+		return monopolioVermelhoFraco;
+	}
+
+	public void setMonopolioVermelhoFraco(int monopolioVermelhoFraco) {
+		this.monopolioVermelhoFraco = monopolioVermelhoFraco;
+	}
+
+	public int getMonopolioAzulCeu() {
+		return monopolioAzulCeu;
+	}
+
+	public void setMonopolioAzulCeu(int monopolioAzulCeu) {
+		this.monopolioAzulCeu = monopolioAzulCeu;
+	}
+
+	public int getMonopolioVioleta() {
+		return monopolioVioleta;
+	}
+
+	public void setMonopolioVioleta(int monopolioVioleta) {
+		this.monopolioVioleta = monopolioVioleta;
+	}
+
+	public int getMonopolioLaranja() {
+		return monopolioLaranja;
+	}
+
+	public void setMonopolioLaranja(int monopolioLaranja) {
+		this.monopolioLaranja = monopolioLaranja;
+	}
+
+	public int getMonopolioVermelhoForte() {
+		return monopolioVermelhoForte;
+	}
+
+	public void setMonopolioVermelhoForte(int monopolioVermelhoForte) {
+		this.monopolioVermelhoForte = monopolioVermelhoForte;
+	}
+
+	public int getMonopolioAmarelo() {
+		return monopolioAmarelo;
+	}
+
+	public void setMonopolioAmarelo(int monopolioAmarelo) {
+		this.monopolioAmarelo = monopolioAmarelo;
+	}
+
+	public int getMonopolioVerde() {
+		return monopolioVerde;
+	}
+
+	public void setMonopolioVerde(int monopolioVerde) {
+		this.monopolioVerde = monopolioVerde;
+	}
+
+	public int getMonopolioAzulEscuro() {
+		return monopolioAzulEscuro;
+	}
+
+	public void setMonopolioAzulEscuro(int monopolioAzulEscuro) {
+		this.monopolioAzulEscuro = monopolioAzulEscuro;
 	}
 
 	public String imprimeOpcoes() {
