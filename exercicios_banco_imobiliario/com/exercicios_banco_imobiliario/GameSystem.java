@@ -99,10 +99,8 @@ public class GameSystem {
 
 				case "jogar":
 
-					// int d1 = Dado.rolaDado();
-					// int d2 = Dado.rolaDado();
-					int d1 = 4;
-					int d2 = 1;
+					int d1 = Dado.rolaDado();
+					int d2 = Dado.rolaDado();
 					int posicaoAposJogada = jogo.anda(jogadorDaVez.getPosicaoAtual(), d1, d2);
 					jogadorDaVez.setPosicaoAtual(tabuleiro.getPosicoesNoTabuleiro()[posicaoAposJogada]);
 
