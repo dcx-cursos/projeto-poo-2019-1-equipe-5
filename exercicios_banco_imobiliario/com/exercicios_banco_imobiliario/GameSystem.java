@@ -99,6 +99,15 @@ public class GameSystem {
 
 				case "jogar":
 
+					if (jogadorDaVez.getMonopolioAmarelo() == 3 || jogadorDaVez.getMonopolioAzulCeu() == 3 || jogadorDaVez.getMonopolioAzulEscuro() == 2
+								|| jogadorDaVez.getMonopolioLaranja() == 2 || jogadorDaVez.getMonopolioVerde() == 4 || jogadorDaVez.getMonopolioVermelhoForte() == 2
+								|| jogadorDaVez.getMonopolioVermelhoFraco() == 3 || jogadorDaVez.getMonopolioVioleta() == 3) {
+						
+						if (!jogadorDaVez.getOpcoes().contains("construir")) jogadorDaVez.adicionaOpcoes("construir");
+					}
+					
+					//implementar código para tirar a opção quando não puder mais construir.
+					
 					int d1 = Dado.rolaDado();
 					int d2 = Dado.rolaDado();
 					int posicaoAposJogada = jogo.anda(jogadorDaVez.getPosicaoAtual(), d1, d2);
