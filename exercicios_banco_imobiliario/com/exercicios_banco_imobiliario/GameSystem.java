@@ -98,14 +98,25 @@ public class GameSystem {
 				switch (opcao.toLowerCase()) {
 
 				case "jogar":
-
-					if (jogadorDaVez.getMonopolioAmarelo() == 3 || jogadorDaVez.getMonopolioAzulCeu() == 3 || jogadorDaVez.getMonopolioAzulEscuro() == 2
-								|| jogadorDaVez.getMonopolioLaranja() == 2 || jogadorDaVez.getMonopolioVerde() == 4 || jogadorDaVez.getMonopolioVermelhoForte() == 2
-								|| jogadorDaVez.getMonopolioVermelhoFraco() == 3 || jogadorDaVez.getMonopolioVioleta() == 3) {
-						
-						if (!jogadorDaVez.getOpcoes().contains("construir")) jogadorDaVez.adicionaOpcoes("construir");
-					}
 					
+					boolean monopolio = false;
+					int quantidadeDoMesmoTipo;
+					
+					if (jogo.getPilha().getIndiciesTitulosDePropriedade().contains(jogadorDaVez.getPosicaoAtual())) {
+					
+						TituloDePropriedade t = (TituloDePropriedade) jogo.getPilha().getCartas()
+								.get(jogadorDaVez.getPosicaoAtual());
+						
+						monopolio = jogadorDaVez.verificarMonopolio(jogadorDaVez, t);
+					
+						quantidadeDoMesmoTipo = jogo.verificaQuantidadeDoMesmoTipo(t);
+						
+						if (monopolio) {
+							jogadorDaVez.getOpcoes().add("construir");
+							if(jogadorDaVez.verificaLotacao(t.getTipo(), quantidadeDoMesmoTipo)) jogadorDaVez.getOpcoes().remove("construir");
+						}
+					
+					}
 					//implementar código para tirar a opção quando não puder mais construir.
 					
 					int d1 = Dado.rolaDado();
