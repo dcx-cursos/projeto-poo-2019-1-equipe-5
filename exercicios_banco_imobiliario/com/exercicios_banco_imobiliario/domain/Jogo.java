@@ -183,7 +183,8 @@ public class Jogo {
 		Collections.shuffle(cartasSorteReves);
 		return cartasSorteReves;
 
-}
+	}
+	
 	public Carta retiraUmaCartaSorteReves(){
 		CartaSorteReves card = (CartaSorteReves)cartasSorteReves.pop();
 		

@@ -94,30 +94,27 @@ public class GameSystem {
 					else
 						System.out.println("Opção inválida!");
 				}
+				
+				boolean monopolio = false;
+				int quantidadeDoMesmoTipo;
+				
+				if (jogo.getPilha().getIndiciesTitulosDePropriedade().contains(jogadorDaVez.getPosicaoAtual())) {
+				
+					TituloDePropriedade t = (TituloDePropriedade) jogo.getPilha().getCartas()
+							.get(jogadorDaVez.getPosicaoAtual());
+					
+					monopolio = jogadorDaVez.verificarMonopolio(jogadorDaVez, t);
+					quantidadeDoMesmoTipo = jogo.verificaQuantidadeDoMesmoTipo(t);
+					if (monopolio) jogadorDaVez.getOpcoes().add("construir");
+					if(jogadorDaVez.verificaLotacao(t.getTipo(), quantidadeDoMesmoTipo)) jogadorDaVez.getOpcoes().remove("construir");
+				
+				}
+				//implementar código para tirar a opção quando não puder mais construir.
+
 
 				switch (opcao.toLowerCase()) {
 
 				case "jogar":
-					
-					boolean monopolio = false;
-					int quantidadeDoMesmoTipo;
-					
-					if (jogo.getPilha().getIndiciesTitulosDePropriedade().contains(jogadorDaVez.getPosicaoAtual())) {
-					
-						TituloDePropriedade t = (TituloDePropriedade) jogo.getPilha().getCartas()
-								.get(jogadorDaVez.getPosicaoAtual());
-						
-						monopolio = jogadorDaVez.verificarMonopolio(jogadorDaVez, t);
-					
-						quantidadeDoMesmoTipo = jogo.verificaQuantidadeDoMesmoTipo(t);
-						
-						if (monopolio) {
-							jogadorDaVez.getOpcoes().add("construir");
-							if(jogadorDaVez.verificaLotacao(t.getTipo(), quantidadeDoMesmoTipo)) jogadorDaVez.getOpcoes().remove("construir");
-						}
-					
-					}
-					//implementar código para tirar a opção quando não puder mais construir.
 					
 					int d1 = Dado.rolaDado();
 					int d2 = Dado.rolaDado();
@@ -303,7 +300,12 @@ public class GameSystem {
 					}
 
 					break;
-
+					
+				case "construir":
+					
+					//...
+					break;
+					
 				case "sair":
 
 					System.out.println("Você realmente quer sair do jogo (sim/não)?");

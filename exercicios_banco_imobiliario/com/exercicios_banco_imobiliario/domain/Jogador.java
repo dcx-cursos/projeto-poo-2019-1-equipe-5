@@ -71,6 +71,10 @@ public class Jogador {
 	public List<String> getOpcoes() {
 		return opcoes;
 	}
+	
+	public List<TituloDePropriedade> getTitulosDePropriedade(){
+		return this.titulos;
+	}
 
 	public boolean isSaidaLivre() {
 		return saidaLivre;
