@@ -183,7 +183,8 @@ public class Jogo {
 		Collections.shuffle(cartasSorteReves);
 		return cartasSorteReves;
 
-}
+	}
+	
 	public Carta retiraUmaCartaSorteReves(){
 		CartaSorteReves card = (CartaSorteReves)cartasSorteReves.pop();
 		
@@ -243,6 +244,12 @@ public class Jogo {
 
 	public void setSaidaLivreDaPrisao(CartaSorteReves saidaLivreDaPrisao) {
 		this.saidaLivreDaPrisao = saidaLivreDaPrisao;
+	}
+
+	public int verificaQuantidadeDoMesmoTipo(TituloDePropriedade t) {
+		if (t.getTipo().equals("laranja") || t.getTipo().equals("vermelhoForte") || t.getTipo().equals("azulEscuro")) return 2;
+		if (t.getTipo().equals("verde")) return 4;
+		return 3;
 	}
 
 }

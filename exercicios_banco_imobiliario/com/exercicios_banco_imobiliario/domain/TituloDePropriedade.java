@@ -15,8 +15,9 @@ public class TituloDePropriedade extends Carta implements Negociavel {
 	private int precoDaCasa;
 	private String tipo;
 	private Peao proprietario;
-	private int construcao = 3;
-
+	private int construcao = 0; //0. Sem casa, 1. Uma casa, 2. Duas casas, 3. três casas, 4. Quatro casas, 5. Hotel
+	private boolean lotacao = false;
+	
 	public TituloDePropriedade(int id, String nome, int preco, int aluguelSemCasa, int aluguelUmaCasa,
 			int aluguelDuasCasas, int aluguelTresCasas, int aluguelQuatroCasas, int aluguelHotel, int hipoteca,
 			int precoDaCasa, String tipo) {
@@ -104,8 +105,20 @@ public class TituloDePropriedade extends Carta implements Negociavel {
 		return 0;
 	}
 
+	public int getConstrucao() {
+		return this.construcao;
+	}
+	
 	public void setConstrucao(int construcao) {
 		this.construcao = construcao;
+	}
+
+	public boolean isLotacao() {
+		return lotacao;
+	}
+
+	public void setLotacao(boolean lotacao) {
+		this.lotacao = lotacao;
 	}
 
 }

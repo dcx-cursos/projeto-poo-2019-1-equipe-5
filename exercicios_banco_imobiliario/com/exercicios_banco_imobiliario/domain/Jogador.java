@@ -71,6 +71,10 @@ public class Jogador {
 	public List<String> getOpcoes() {
 		return opcoes;
 	}
+	
+	public List<TituloDePropriedade> getTitulosDePropriedade(){
+		return this.titulos;
+	}
 
 	public boolean isSaidaLivre() {
 		return saidaLivre;
@@ -165,12 +169,60 @@ public class Jogador {
 		s += "========== STATUS ==========\n\n" + "Jogador: "
 				+ this.nome.substring(0, 1).toUpperCase().concat(this.nome.substring(1)) + "(" + this.peao + "):\n"
 				+ "Posição atual: " + this.posicaoAtual + "\n" + "Dinheiro: " + this.dinheiro + "\n"
-				+ "Títulos de propriedade: " + this.getTitulos() + "\n"
-				+ "Companhias: " + this.getCompanhias() + "\n"
+				+ "Títulos de propriedade: " + this.getTitulos() + "\n" + "Companhias: " + this.getCompanhias() + "\n"
 				+ "============================\n";
 		return s;
 	}
 
+	public boolean verificaLotacao(String tipo, int quantidadeDoMesmoTipo) {
+		
+		for (TituloDePropriedade t : titulos) {
+			if (t.getTipo().equals(tipo) && t.getConstrucao() != 5) return false;  
+		}
+		return true;
+	}
+	
+	public boolean verificarMonopolio(Jogador jogadorDaVez, TituloDePropriedade titulo) {
+		
+		switch (titulo.getTipo()) {
+		case "amarelo":
+			if (jogadorDaVez.getMonopolioAmarelo() == 3) {
+				return true;
+			}
+			return false;
+			
+		case "azulCeu":
+			if (jogadorDaVez.getMonopolioAzulCeu() == 3) return true;
+			return false;
+			
+		case "azulEscuro":
+			if (jogadorDaVez.getMonopolioAzulEscuro() == 2) return true;
+			return false;
+			
+		case "laranja":
+			if (jogadorDaVez.getMonopolioLaranja() == 2) return true;
+			return false;
+			
+		case "verde":
+			if (jogadorDaVez.getMonopolioVerde() == 3) return true;
+			return false;
+			
+		case "vermelhoForte":
+			if (jogadorDaVez.getMonopolioVermelhoForte() == 2) return true;
+			return false;
+			
+		case "vermelhoFraco":
+			if (jogadorDaVez.getMonopolioVermelhoFraco() == 3) return true;
+			return false;
+			
+		case "violeta":
+			if (jogadorDaVez.getMonopolioVioleta() == 3) return true;
+			return false;
+			
+		}//fim do switch
+		return false;
+	}	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -228,7 +280,7 @@ public class Jogador {
 	public String getCompanhias() {
 		String companhia = "";
 		for (Companhia c : this.companhias) {
-			companhia += "[" + c.getNome() + "]";
+			companhia += "[" + c.getNome() + " - Fator multiplicador: " + c.getMultiplicador() + "]";
 		}
 		return companhia;
 	}
